@@ -1,4 +1,4 @@
-from session import Session
+from .session import Session
 from ..recorder.recorder import Recorder
 from ..classifier.base_classifier import BaseClassifier
 from ..paradigm.paradigm import Paradigm
