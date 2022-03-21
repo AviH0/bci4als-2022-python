@@ -3,6 +3,7 @@ import threading
 from typing import Optional, List, Union
 
 import mne
+import numpy as np
 from mne.io import RawArray
 from nptyping import NDArray
 
@@ -23,7 +24,8 @@ class CytonRecorder(Recorder):
                  headset: str = "cyton"):
         super(CytonRecorder, self).__init__(config)
 
-
+        self.__config = config
+        self.__seen_markers = 0
         self.headset: str = headset
         self.board_id = board_id
         # Board Id and Headset Name
@@ -51,6 +53,9 @@ class CytonRecorder(Recorder):
         self.__on()
 
     def push_marker(self, marker):
+        if marker not in self.__config.TRIAL_LABELS:
+            self.__seen_markers += 1
+            self.__config.TRIAL_LABELS[marker] = f"Stimulus_{self.__seen_markers}"
         self.__insert_marker(marker)
 
     def end_recording(self):
@@ -122,11 +127,18 @@ class CytonRecorder(Recorder):
         """
         eeg_data = board_data / 1000000  # BrainFlow returns uV, convert to V for MNE
 
+        # Add marker channel:
+        # eeg_data = np.stack([eeg_data, self.board.get_marker_channel(self.board_id)])
+        marker_info = mne.create_info(ch_names=['stim'], sfreq=self.sfreq, ch_types=['stim'])
+        marker_raw = mne.io.RawArray(self.board.get_marker_channel(self.board_id), marker_info)
+        event_dict = {v: k for k, v in self.__config.TRIAL_LABELS.items()}
+        events = mne.find_events(marker_raw, stim_channel="stim", output="onset", shortest_event=0)
+
         # Creating MNE objects from BrainFlow data arrays
         ch_types = ['eeg'] * len(board_data)
         info = mne.create_info(ch_names=ch_names, sfreq=self.sfreq, ch_types=ch_types)
         raw = mne.io.RawArray(eeg_data, info, verbose=False)
-
+        raw.add_events(events)
         return raw
 
     def __get_board_data(self) -> NDArray:
