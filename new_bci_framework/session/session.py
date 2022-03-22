@@ -22,7 +22,7 @@ class Session:
         self.epoched_data = None
 
     def run_all(self):
-        pass
+        raise NotImplementedError
 
     @staticmethod
     def load_session(session_dir: str):
@@ -31,3 +31,4 @@ class Session:
         :param session_dir: saved session directory
         :return: Session object
         """
+        raise NotImplementedError

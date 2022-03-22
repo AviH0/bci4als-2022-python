@@ -1,7 +1,7 @@
 from ..paradigm.paradigm import Paradigm
 from ..config.config import Config
 from ..recorder.recorder import Recorder
-from psychopy import visual
+# from psychopy import visual
 
 class P300Paradaigm(Paradigm):
     """

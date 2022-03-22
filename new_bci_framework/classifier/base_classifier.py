@@ -9,13 +9,13 @@ class BaseClassifier:
     """
 
     def __init__(self, config: Config):
-        pass
+        self.__config = config
 
     def fit(self, data=mne.Epochs):
-        pass
+        raise NotImplementedError
 
     def predict(self, data: mne.Epochs):
-        pass
+        raise NotImplementedError
 
     def evaluate(self, data: mne.Epochs):
-        pass
+        raise NotImplementedError

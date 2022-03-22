@@ -17,7 +17,12 @@ class OfflineSession(Session):
 
     def run_recording(self):
         self.recorder.start_recording()
+        if self.config.SHOW_LIVE_DATA:
+            th = self.recorder.plot_live_data(block=False)
         self.paradigm.start(self.recorder)
+        if self.config.SHOW_LIVE_DATA:
+            print("Close live data view to end recording")
+            th.join()
         self.recorder.end_recording()
 
     def run_preprocessing(self):

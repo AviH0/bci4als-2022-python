@@ -1,3 +1,4 @@
+import os.path
 from threading import Thread
 from typing import Union
 
@@ -14,19 +15,22 @@ class Recorder:
     """
 
     def __init__(self, config: Config):
-        pass
+        self._config = config
+        self._data_dir = f"{config.SESSION_SAVE_DIR}/recorder"
+        if not os.path.isdir(self._data_dir):
+            os.mkdir(self._data_dir)
 
     def start_recording(self):
-        pass
+        raise NotImplementedError
 
     def push_marker(self, marker: float):
-        pass
+        raise NotImplementedError
 
     def end_recording(self):
-        pass
+        raise NotImplementedError
 
     def get_raw_data(self) -> mne.io.Raw:
-        pass
+        raise NotImplementedError
 
     def plot_live_data(self, block=True) -> Union[None, Thread]:
         """
@@ -35,4 +39,4 @@ class Recorder:
         Will block execution until plot is closed unless block is set to false.
         if block is false, return a thread handle that must be joined before exit
         """
-        pass
+        raise NotImplementedError

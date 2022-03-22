@@ -2,6 +2,7 @@ import atexit
 import threading
 from typing import Optional, List, Union
 
+import matplotlib.pyplot as plt
 import mne
 import numpy as np
 from mne.io import RawArray
@@ -21,10 +22,12 @@ class CytonRecorder(Recorder):
                  board_id: int = BoardIds.CYTON_DAISY_BOARD.value,
                  ip_port: int = 6677,
                  serial_port: Optional[str] = None,
-                 headset: str = "cyton"):
+                 headset: str = "cyton",
+                 synthetic_data=False):
         super(CytonRecorder, self).__init__(config)
-
-        self.__config = config
+        if synthetic_data:
+            board_id = BoardIds.SYNTHETIC_BOARD
+        self._config = config
         self.__seen_markers = 0
         self.headset: str = headset
         self.board_id = board_id
@@ -49,17 +52,15 @@ class CytonRecorder(Recorder):
         self.data = None
 
     def start_recording(self):
-        super().start_recording()
         self.__on()
 
     def push_marker(self, marker):
-        if marker not in self.__config.TRIAL_LABELS:
+        if marker not in self._config.TRIAL_LABELS:
             self.__seen_markers += 1
-            self.__config.TRIAL_LABELS[marker] = f"Stimulus_{self.__seen_markers}"
+            self._config.TRIAL_LABELS[marker] = f"Stimulus_{self.__seen_markers}"
         self.__insert_marker(marker)
 
     def end_recording(self):
-        super().end_recording()
         self.__off()
 
     def get_raw_data(self) -> RawArray:
@@ -119,7 +120,7 @@ class CytonRecorder(Recorder):
         # print(f'Status: { status }, Marker: { marker }')  # debug
         # print(f'Count: { self.board.get_board_data_count() }')  # debug
 
-    def __board_to_mne(self, board_data: NDArray, ch_names: List[str]) -> mne.io.RawArray:
+    def __board_to_mne(self, board_data: NDArray, stim: NDArray, ch_names: List[str]) -> mne.io.RawArray:
         """
         Convert the ndarray board data to mne object
         :param board_data: raw ndarray from board
@@ -130,15 +131,23 @@ class CytonRecorder(Recorder):
         # Add marker channel:
         # eeg_data = np.stack([eeg_data, self.board.get_marker_channel(self.board_id)])
         marker_info = mne.create_info(ch_names=['stim'], sfreq=self.sfreq, ch_types=['stim'])
-        marker_raw = mne.io.RawArray(self.board.get_marker_channel(self.board_id), marker_info)
-        event_dict = {v: k for k, v in self.__config.TRIAL_LABELS.items()}
-        events = mne.find_events(marker_raw, stim_channel="stim", output="onset", shortest_event=0)
-
+        marker_raw = mne.io.RawArray([stim], marker_info)
+        event_dict = {v: k for k, v in self._config.TRIAL_LABELS.items()}
+        events = mne.find_events(marker_raw, stim_channel="stim", output="onset")
+        fig = mne.viz.plot_events(events, show=False, event_id=event_dict, sfreq=self.sfreq)
+        fig.savefig(f"{self._data_dir}/events.png")
+        if self._config.SHOW_PLOTS:
+            plt.show(block=False)
         # Creating MNE objects from BrainFlow data arrays
         ch_types = ['eeg'] * len(board_data)
         info = mne.create_info(ch_names=ch_names, sfreq=self.sfreq, ch_types=ch_types)
+        if self.board_id == BoardIds.CYTON_DAISY_BOARD:
+            montage = mne.channels.read_custom_montage(fname=self._config.MONTAGE_FILENAME)
+        else:
+            montage = mne.channels.make_standard_montage('biosemi64')
+        info.set_montage(montage)
         raw = mne.io.RawArray(eeg_data, info, verbose=False)
-        raw.add_events(events)
+        raw.add_channels([marker_raw])
         return raw
 
     def __get_board_data(self) -> NDArray:
@@ -155,5 +164,6 @@ class CytonRecorder(Recorder):
         indices = [self.eeg_names.index(ch) for ch in ch_names]
 
         data = self.data[indices]
+        stim = self.data[self.board.get_marker_channel(self.board_id)]
 
-        return self.__board_to_mne(data, ch_names)
+        return self.__board_to_mne(data, stim, ch_names)

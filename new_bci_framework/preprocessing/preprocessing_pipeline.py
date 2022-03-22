@@ -1,3 +1,6 @@
+import os
+from typing import Dict
+
 import mne
 
 from ..config.config import Config
@@ -12,26 +15,28 @@ class PreprocessingPipeline:
     """
 
     def __init__(self, config: Config):
-        self.__config = config
-        self.__data_dir = self.__config.SESSION_SAVE_DIR
+        self._config = config
+        self._save_dir = f"{self._config.SESSION_SAVE_DIR}/preprocessor"
+        if not os.path.isdir(self._save_dir):
+            os.mkdir(self._save_dir)
 
     def __segement(self, data: mne.io.Raw) -> mne.Epochs:
-        event_dict = {v: k for k, v in self.__config.TRIAL_LABELS.items()}
-        events = mne.find_events(data, output="onset", shortest_event=0)
+        event_dict: Dict[str, int] = {v: k for k, v in self._config.TRIAL_LABELS.items()}
+        events = mne.find_events(data, output="onset")
 
         epochs = mne.Epochs(data,
                             events,
-                            tmin=self.__config.TRIAL_START_TIME,
-                            tmax=self.__config.TRIAL_END_TIME,
+                            tmin=self._config.TRIAL_START_TIME,
+                            tmax=self._config.TRIAL_END_TIME,
                             event_id=event_dict,
                             verbose='INFO',
                             on_missing='warn')
         return epochs
 
     def __filter(self,  data: mne.io.Raw) -> None:
-        data.filter(l_freq=self.__config.LOW_PASS_FILTER, h_freq=self.__config.HIGH_PASS_FILTER)
-        if self.__config.NOTCH_FILTER:
-            data.notch_filter(self.__config.NOTCH_FILTER)
+        data.filter(l_freq=self._config.LOW_PASS_FILTER, h_freq=self._config.HIGH_PASS_FILTER)
+        if self._config.NOTCH_FILTER:
+            data.notch_filter(self._config.NOTCH_FILTER)
 
     def run_pipeline(self, data: mne.io.Raw) -> mne.Epochs:
         self.__filter(data)

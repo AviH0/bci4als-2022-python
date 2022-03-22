@@ -12,7 +12,7 @@ class Paradigm:
     """
 
     def __init__(self, config: Config):
-        pass
+        self._config = config
 
     def start(self, recorder: Recorder):
-        pass
+        raise NotImplementedError
