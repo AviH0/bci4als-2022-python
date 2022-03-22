@@ -38,3 +38,4 @@ class OfflineSession(Session):
         self.run_recording()
         self.run_preprocessing()
         self.run_classifier()
+        self.save_session()

@@ -1,8 +1,14 @@
+import os
+import pickle
+from pickle import Pickler
+
 from ..recorder.recorder import Recorder
 from ..classifier.base_classifier import BaseClassifier
 from ..paradigm.paradigm import Paradigm
 from ..preprocessing.preprocessing_pipeline import PreprocessingPipeline
 from ..config.config import Config
+
+SESSION_SAVE_FILE_PICKLE = "session_save_file.pickle"
 
 
 class Session:
@@ -24,6 +30,10 @@ class Session:
     def run_all(self):
         raise NotImplementedError
 
+    def save_session(self):
+        with open(os.path.join(self.config.SESSION_SAVE_DIR, SESSION_SAVE_FILE_PICKLE), 'w') as savefile:
+            Pickler(savefile).dump(self)
+
     @staticmethod
     def load_session(session_dir: str):
         """
@@ -31,4 +41,5 @@ class Session:
         :param session_dir: saved session directory
         :return: Session object
         """
-        raise NotImplementedError
+        with open(os.path.join(session_dir, SESSION_SAVE_FILE_PICKLE), 'w') as savefile:
+            return pickle.load(savefile)
