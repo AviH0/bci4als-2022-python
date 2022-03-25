@@ -1,8 +1,8 @@
-#!/usr/bin/env python
+﻿#!/usr/bin/env python
 # -*- coding: utf-8 -*-
 """
-This experiment was created using PsychoPy3 Experiment Builder (v2022.1.1),
-    on March 21, 2022, at 17:23
+This experiment was created using PsychoPy3 Experiment Builder (v2021.2.3),
+    on March 25, 2022, at 13:00
 If you publish work using this script the most relevant publication is:
 
     Peirce J, Gray JR, Simpson S, MacAskill M, Höchenberger R, Sogo H, Kastman E, Lindeløv JK. (2019) 
@@ -11,9 +11,11 @@ If you publish work using this script the most relevant publication is:
 
 """
 
+from __future__ import absolute_import, division
+
 from psychopy import locale_setup
 from psychopy import prefs
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout
+from psychopy import sound, gui, visual, core, data, event, logging, clock, colors
 from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                 STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 
@@ -24,15 +26,16 @@ from numpy.random import random, randint, normal, shuffle, choice as randchoice
 import os  # handy system and path functions
 import sys  # to get file system encoding
 
-import psychopy.iohub as io
 from psychopy.hardware import keyboard
+
 
 
 # Ensure that relative paths start from the same directory as this script
 _thisDir = os.path.dirname(os.path.abspath(__file__))
 os.chdir(_thisDir)
+
 # Store info about the experiment session
-psychopyVersion = '2022.1.1'
+psychopyVersion = '2021.2.3'
 expName = 'TRY1'  # from the Builder filename that created this script
 expInfo = {'participant': '', 'session': '001'}
 dlg = gui.DlgFromDict(dictionary=expInfo, sortKeys=False, title=expName)
@@ -48,7 +51,7 @@ filename = _thisDir + os.sep + u'data/%s_%s_%s' % (expInfo['participant'], expNa
 # An ExperimentHandler isn't essential but helps with data saving
 thisExp = data.ExperimentHandler(name=expName, version='',
     extraInfo=expInfo, runtimeInfo=None,
-    originPath='C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\python\\bci4als-2022-python\\new_bci_framework\\TRY1.py',
+    originPath='TRY1.py',
     savePickle=True, saveWideText=True,
     dataFileName=filename)
 # save a log file for detail verbose info
@@ -66,9 +69,6 @@ win = visual.Window(
     winType='pyglet', allowGUI=False, allowStencil=False,
     monitor='testMonitor', color=[0,0,0], colorSpace='rgb',
     blendMode='avg', useFBO=True)
- 
- your_mouse = event.Mouse(visible = False)
- 
 # store frame rate of monitor if we can measure it
 expInfo['frameRate'] = win.getActualFrameRate()
 if expInfo['frameRate'] != None:
@@ -76,26 +76,18 @@ if expInfo['frameRate'] != None:
 else:
     frameDur = 1.0 / 60.0  # could not measure, so guess
 
-# Setup ioHub
-ioConfig = {}
-# Setup iohub keyboard
-ioConfig['Keyboard'] = dict(use_keymap='psychopy')
- 
-ioSession = '1'
-if 'session' in expInfo:
-    ioSession = str(expInfo['session'])
-ioServer = io.launchHubServer(window=win, **ioConfig)
-eyetracker = None
+# Setup eyetracking
+ioDevice = ioConfig = ioSession = ioServer = eyetracker = None
 
 # create a default keyboard (e.g. to check for escape)
-defaultKeyboard = keyboard.Keyboard(backend='iohub')
+defaultKeyboard = keyboard.Keyboard()
 
 # Initialize components for Routine "Instructions"
 InstructionsClock = core.Clock()
 image = visual.ImageStim(
     win=win,
     name='image', 
-    image='C:/Users/yarde/Desktop/instructions/Slide1.JPG', mask=None, anchor='center',
+    image='Instructions_image.PNG', mask=None,
     ori=0.0, pos=(0, 0), size=(2, 2),
     color=[1,1,1], colorSpace='rgb', opacity=None,
     flipHoriz=False, flipVert=False,
@@ -109,7 +101,7 @@ target_quest = visual.TextStim(win=win, name='target_quest',
     font='Open Sans',
     pos=(0, 0), height=0.05, wrapWidth=None, ori=0.0, 
     color='black', colorSpace='rgb', opacity=None, 
-    languageStyle='LTR',
+    languageStyle='RTL',
     depth=0.0);
 
 # Initialize components for Routine "cross"
@@ -117,8 +109,8 @@ crossClock = core.Clock()
 polygon = visual.ShapeStim(
     win=win, name='polygon', vertices='cross',
     size=(0.25, 0.25),
-    ori=0.0, pos=(0, 0), anchor='center',
-    lineWidth=1.0,     colorSpace='rgb',  lineColor=[-1.0000, -1.0000, -1.0000], fillColor=[-1.0000, -1.0000, -1.0000],
+    ori=0.0, pos=(0, 0),
+    lineWidth=1.0,     colorSpace='rgb',  lineColor='-1.0000, -1.0000, -1.0000', fillColor='-1.0000, -1.0000, -1.0000',
     opacity=None, depth=0.0, interpolate=True)
 
 # Initialize components for Routine "trial"
@@ -128,7 +120,7 @@ target_word = visual.TextStim(win=win, name='target_word',
     font='Open Sans',
     pos=(0, 0), height=0.2, wrapWidth=None, ori=0.0, 
     color='black', colorSpace='rgb', opacity=None, 
-    languageStyle='LTR',
+    languageStyle='RTL',
     depth=0.0);
 target_sound = sound.Sound('A', secs=0.7, stereo=True, hamming=True,
     name='target_sound')
@@ -237,7 +229,7 @@ routineTimer.reset()
 # set up handler to look after randomisation of conditions etc
 questions = data.TrialHandler(nReps=1.0, method='fullRandom', 
     extraInfo=expInfo, originPath=-1,
-    trialList=data.importConditions('C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/questions.xlsx'),
+    trialList=data.importConditions('questions.xlsx'),
     seed=None, name='questions')
 thisExp.addLoop(questions)  # add the loop to the experiment
 thisQuestion = questions.trialList[0]  # so we can initialise stimuli with some values
@@ -326,7 +318,7 @@ for thisQuestion in questions:
     # set up handler to look after randomisation of conditions etc
     trials = data.TrialHandler(nReps=2.0, method='fullRandom', 
         extraInfo=expInfo, originPath=-1,
-        trialList=data.importConditions('C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx'),
+        trialList=data.importConditions('stim_words.xlsx'),
         seed=None, name='trials')
     thisExp.addLoop(trials)  # add the loop to the experiment
     thisTrial = trials.trialList[0]  # so we can initialise stimuli with some values
@@ -518,8 +510,6 @@ thisExp.saveAsWideText(filename+'.csv', delim='auto')
 thisExp.saveAsPickle(filename)
 logging.flush()
 # make sure everything is closed down
-if eyetracker:
-    eyetracker.setConnectionState(False)
 thisExp.abort()  # or data files will save again on exit
 win.close()
 core.quit()
