@@ -1,6 +1,6 @@
 import os.path
 from threading import Thread
-from typing import Union
+from typing import Union, Optional
 
 import mne
 from ..config.config import Config
@@ -32,7 +32,7 @@ class Recorder:
     def get_raw_data(self) -> mne.io.Raw:
         raise NotImplementedError
 
-    def plot_live_data(self, block=True) -> Union[None, Thread]:
+    def plot_live_data(self, block=True) -> Optional[Thread]:
         """
         Plot the data being captured in real time.
         Call after recording started.
