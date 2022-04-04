@@ -1,0 +1,4 @@
+﻿questions.thisRepN,questions.thisTrialN,questions.thisN,questions.thisIndex,Question_stim,image_2.started,image_2.stopped,key_resp_3.keys,key_resp_3.rt,key_resp_3.started,key_resp_3.stopped,text.started,text.stopped,key_resp_4.keys,key_resp_4.rt,key_resp_4.started,key_resp_4.stopped,sound_1.started,sound_1.stopped,image.started,image.stopped,key_resp.keys,key_resp.rt,key_resp.started,key_resp.stopped,participant,session,date,expName,psychopyVersion,frameRate,
+,,,,,7.148925600107759,11.162635500077158,space,8.028815800091252,7.148925600107759,None,,,,,,,,,,,,,,,1,001,2022-04-02_21h45.38.578,TRY1,2022.1.1,60.08723462596028,
+,,,,,,,,,,,15.19919200008735,None,space,4.326941899955273,15.19919200008735,None,,,,,,,,,1,001,2022-04-02_21h45.38.578,TRY1,2022.1.1,60.08723462596028,
+,,,,,,,,,,,,,,,,,19.544299900019542,None,20.544601200148463,24.560228200163692,escape,4.7703352000098675,20.544601200148463,None,1,001,2022-04-02_21h45.38.578,TRY1,2022.1.1,60.08723462596028,

@@ -1,0 +1,90 @@
+1.0054 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+5.4898 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001E968848AF0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x000001E96A4C10D0>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, units='norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+5.4902 	EXP 	window1: mouseVisible = True
+5.4903 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+5.4903 	EXP 	window1: recordFrameIntervals = False
+5.6567 	EXP 	window1: recordFrameIntervals = True
+5.8402 	EXP 	Screen (0) actual frame rate measured at 60.02Hz
+5.8402 	EXP 	window1: recordFrameIntervals = False
+6.9689 	EXP 	Created image_2 = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, image=str(...), interpolate=True, mask=None, maskParams=None, name='image_2', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([2., 2.]), texRes=128.0, units='norm', win=Window(...))
+6.9877 	EXP 	Created text = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='text', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+7.1540 	EXP 	Sound sound_1 set volume 1.000
+7.1732 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, image='Instructions_image.PNG', interpolate=True, mask=None, maskParams=None, name='image', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([2., 2.]), texRes=128.0, units='norm', win=Window(...))
+7.1748 	EXP 	Created target_quest = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.15, italic=False, languageStyle='RTL', name='target_quest', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+7.1765 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([-1, -1, -1]), fillColorSpace='rgb', fillRGB=array([-1, -1, -1]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1, -1, -1]), lineWidth=1.0, name='polygon', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([0.25, 0.25]), units='norm', vertices=ndarray(...), win=Window(...), windingRule=None)
+7.1778 	EXP 	Created target_word = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.2, italic=False, languageStyle='RTL', name='target_word', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+7.1778 	EXP 	Sound target_sound set volume 1.000
+7.1866 	EXP 	Created how_much = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.15, italic=False, languageStyle='LTR', name='how_much', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='1/30', units='norm', win=Window(...), wrapWidth=1)
+7.2235 	EXP 	image_2: autoDraw = True
+11.2390 	EXP 	image_2: autoDraw = False
+12.4771 	EXP 	image_2: autoDraw = False
+12.4771 	EXP 	text: autoDraw = True
+15.9046 	EXP 	text: autoDraw = False
+16.9213 	EXP 	image: autoDraw = True
+20.7935 	EXP 	Imported questions.xlsx as conditions, 5 conditions, 1 params
+20.7940 	EXP 	Created sequence: fullRandom, trialTypes=5, nReps=1, seed=None
+20.7942 	EXP 	New trial (rep=0, index=0): {'Question_stim': 'האם יש לך חמישה ילדים?'}
+20.8184 	EXP 	image: autoDraw = False
+20.8184 	EXP 	target_quest: height = 0.15
+20.8184 	EXP 	target_quest: height = 0.15
+20.8184 	EXP 	target_quest: text = 'האם יש לך חמישה ילדים?'
+20.8184 	EXP 	target_quest: autoDraw = True
+22.3087 	EXP 	Imported stim_words.xlsx as conditions, 3 conditions, 4 params
+22.3089 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+22.3091 	EXP 	New trial (rep=0, index=0): {'stim': 'yes', 'word': 'כן', 'color': 'black', 'sound_target': 'YEShebYardenSHORT.wav'}
+22.3212 	EXP 	target_quest: autoDraw = False
+22.3212 	EXP 	polygon: autoDraw = True
+23.0203 	EXP 	polygon: autoDraw = False
+23.0203 	EXP 	target_word: height = 0.2
+23.0203 	EXP 	target_word: height = 0.2
+23.0203 	EXP 	target_word: text = 'כן'
+23.0203 	EXP 	target_word: autoDraw = True
+24.0040 	EXP 	New trial (rep=0, index=1): {'stim': 'yes', 'word': 'כן', 'color': 'black', 'sound_target': 'YEShebYardenSHORT.wav'}
+24.0210 	EXP 	target_word: autoDraw = False
+24.0210 	EXP 	polygon: autoDraw = True
+24.7203 	EXP 	polygon: autoDraw = False
+24.7203 	EXP 	target_word: height = 0.2
+24.7203 	EXP 	target_word: height = 0.2
+24.7203 	EXP 	target_word: text = 'כן'
+24.7203 	EXP 	target_word: autoDraw = True
+25.7040 	EXP 	New trial (rep=0, index=2): {'stim': 'no', 'word': 'לא', 'color': 'black', 'sound_target': 'NOhebYardenSHORT.wav'}
+25.7213 	EXP 	target_word: autoDraw = False
+25.7213 	EXP 	polygon: autoDraw = True
+26.4203 	EXP 	polygon: autoDraw = False
+26.4203 	EXP 	target_word: height = 0.2
+26.4203 	EXP 	target_word: height = 0.2
+26.4203 	EXP 	target_word: text = 'לא'
+26.4203 	EXP 	target_word: autoDraw = True
+27.4036 	EXP 	New trial (rep=1, index=0): {'stim': 'whiteNoise', 'word': 'רעש', 'color': 'grey', 'sound_target': 'PinkNoise.wav'}
+27.4202 	EXP 	target_word: autoDraw = False
+27.4202 	EXP 	polygon: autoDraw = True
+28.1203 	EXP 	polygon: autoDraw = False
+28.1203 	EXP 	target_word: height = 0.2
+28.1203 	EXP 	target_word: height = 0.2
+28.1203 	EXP 	target_word: text = 'רעש'
+28.1203 	EXP 	target_word: autoDraw = True
+29.1040 	EXP 	New trial (rep=1, index=1): {'stim': 'whiteNoise', 'word': 'רעש', 'color': 'grey', 'sound_target': 'PinkNoise.wav'}
+29.1203 	EXP 	target_word: autoDraw = False
+29.1203 	EXP 	polygon: autoDraw = True
+29.8202 	EXP 	polygon: autoDraw = False
+29.8202 	EXP 	target_word: height = 0.2
+29.8202 	EXP 	target_word: height = 0.2
+29.8202 	EXP 	target_word: text = 'רעש'
+29.8202 	EXP 	target_word: autoDraw = True
+30.8033 	EXP 	New trial (rep=1, index=2): {'stim': 'no', 'word': 'לא', 'color': 'black', 'sound_target': 'NOhebYardenSHORT.wav'}
+30.8199 	EXP 	target_word: autoDraw = False
+30.8199 	EXP 	polygon: autoDraw = True
+31.5201 	EXP 	polygon: autoDraw = False
+31.5201 	EXP 	target_word: height = 0.2
+31.5201 	EXP 	target_word: height = 0.2
+31.5201 	EXP 	target_word: text = 'לא'
+31.5201 	EXP 	target_word: autoDraw = True
+32.5196 	EXP 	target_word: autoDraw = False
+32.5196 	EXP 	how_much: autoDraw = True
+34.0023 	EXP 	New trial (rep=0, index=1): {'Question_stim': 'האם את גרה באשדוד?'}
+34.0182 	EXP 	how_much: autoDraw = False
+34.0182 	EXP 	target_quest: height = 0.15
+34.0182 	EXP 	target_quest: height = 0.15
+34.0182 	EXP 	target_quest: text = 'האם את גרה באשדוד?'
+34.0182 	EXP 	target_quest: autoDraw = True
+35.5381 	EXP 	window1: mouseVisible = True
