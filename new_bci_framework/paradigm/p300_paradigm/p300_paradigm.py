@@ -9,7 +9,7 @@ class P300Paradaigm(Paradigm):
     """
 
     def __init__(self, config: Config):
-        super(P300Paradaigm, self).__init__(config)
+        super(P300Paradaigm, self).create_pseudoRand()
 
     def start(self, recorder: Recorder):
         pass
