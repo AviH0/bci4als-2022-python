@@ -1,5 +1,6 @@
 import atexit
 import threading
+import time
 from typing import Optional, List, Union
 
 import matplotlib.pyplot as plt
@@ -31,6 +32,7 @@ class CytonRecorder(Recorder):
         self.__seen_markers = 0
         self.headset: str = headset
         self.board_id = board_id
+        self.__is_recording = False
         # Board Id and Headset Name
 
         # synthetic headset name
@@ -66,6 +68,9 @@ class CytonRecorder(Recorder):
     def get_raw_data(self) -> RawArray:
         return self.__get_raw_data(self.__get_board_names())
 
+    def get_live_capture(self) -> RawArray:
+        return self.__get_raw_data(self.__get_board_names(), full=False)
+
     def plot_live_data(self, block=True) -> Union[None, threading.Thread]:
         start_plot = lambda: Graph(self.board, self.__get_board_names())
         if block:
@@ -74,6 +79,7 @@ class CytonRecorder(Recorder):
             thread = threading.Thread(target=start_plot)
             thread.start()
             return thread
+
 
     def __find_serial_port(self) -> str:
         """
@@ -102,12 +108,14 @@ class CytonRecorder(Recorder):
 
     def __on(self):
         """Turn EEG On"""
+        self.__is_recording = True
         self.board.prepare_session()
         self.board.start_stream()
 
     def __off(self):
         """Turn EEG Off"""
-        self.data = self.__get_board_data()
+        self.__get_board_data()
+        self.__is_recording = False
         self.board.stop_stream()
         self.board.release_session()
 
@@ -134,8 +142,9 @@ class CytonRecorder(Recorder):
         marker_raw = mne.io.RawArray([stim], marker_info)
         event_dict = {v: k for k, v in self._config.TRIAL_LABELS.items()}
         events = mne.find_events(marker_raw, stim_channel="stim", output="onset")
-        fig = mne.viz.plot_events(events, show=False, event_id=event_dict, sfreq=self.sfreq)
-        fig.savefig(f"{self._data_dir}/events.png")
+        if events is not None:
+            fig = mne.viz.plot_events(events, show=False, event_id=event_dict, sfreq=self.sfreq)
+            fig.savefig(f"{self._data_dir}/events.png")
         if self._config.SHOW_PLOTS:
             plt.show(block=False)
         # Creating MNE objects from BrainFlow data arrays
@@ -151,10 +160,18 @@ class CytonRecorder(Recorder):
         return raw
 
     def __get_board_data(self) -> NDArray:
-        """The method returns the data from board and remove it"""
-        return self.board.get_board_data()
+        """The method returns the current data from board, removes it from the buffer and adds it to static
+         storage"""
+        if self.__is_recording:
+            new_data = self.board.get_board_data()
+            if self.data is None:
+                self.data = new_data
+            else:
+                np.concatenate([self.data, new_data], axis=1)
+            return new_data
+        return self.data
 
-    def __get_raw_data(self, ch_names: List[str]) -> mne.io.RawArray:
+    def __get_raw_data(self, ch_names: List[str], full=True) -> mne.io.RawArray:
         """
         The method returns dataframe with all the raw data, and empties the buffer
         :param ch_names: list[str] of channels to select
@@ -163,7 +180,12 @@ class CytonRecorder(Recorder):
 
         indices = [self.eeg_names.index(ch) for ch in ch_names]
 
-        data = self.data[indices]
-        stim = self.data[self.board.get_marker_channel(self.board_id)]
+        if full:
+            self.__get_board_data()
+            data = self.data
+        else:
+            data = self.__get_board_data()
 
+        stim = data[self.board.get_marker_channel(self.board_id)]
+        data = data[indices]
         return self.__board_to_mne(data, stim, ch_names)

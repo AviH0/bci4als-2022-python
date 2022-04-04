@@ -29,7 +29,17 @@ class Recorder:
     def end_recording(self):
         raise NotImplementedError
 
-    def get_raw_data(self) -> mne.io.Raw:
+    def get_live_capture(self) -> mne.io.RawArray:
+        """
+        Get a live capture of the recording, starting at the last call to this function
+        (or start of recording if first call).
+        """
+        raise NotImplementedError
+
+    def get_raw_data(self) -> mne.io.RawArray:
+        """
+        Get the full recording as an mne Raw object.
+        """
         raise NotImplementedError
 
     def plot_live_data(self, block=True) -> Optional[Thread]:

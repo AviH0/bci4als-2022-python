@@ -28,6 +28,7 @@ class P300Preprocessing(PreprocessingPipeline):
         figs += mne.viz.plot_compare_evokeds(evks, show=False, picks='eeg', axes='topo')
 
         for i, fig in enumerate(figs):
+            fig.set_size_inches(20, 10)
             fig.savefig(
                 f"{self._save_dir}/{fig.texts[0].get_text() if fig.texts and fig.texts[0] else 'figure_' + str(i)}.png")
         if self._config.SHOW_PLOTS:
