@@ -1,26 +1,17 @@
 from __future__ import absolute_import, division
+
+import multiprocessing.managers
+from queue import Empty
+
 from ..paradigm import Paradigm
 from ...config.config import Config
 from ...recorder.recorder import Recorder
-
-from psychopy import locale_setup
-from psychopy import prefs
-from psychopy import sound, gui, visual, core, data, event, logging, clock, colors
-from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
-                                STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
-
-import numpy as np  # whole numpy lib is available, prepend 'np.'
-from numpy import (sin, cos, tan, log, log10, pi, average,
-                   sqrt, std, deg2rad, rad2deg, linspace, asarray)
-from numpy.random import random, randint, normal, shuffle, choice as randchoice
-import os  # handy system and path functions
-import sys  # to get file system encoding
-
-from psychopy.hardware import keyboard
-
-
+import os
 from new_bci_framework.paradigm.p300_paradigm.create_pseudoRand import create_pseudo_rand
 
+
+class RecorderManager(multiprocessing.managers.BaseManager):
+    pass
 
 FILE_DIR =os.path.dirname(os.path.abspath(__file__))
 RESCOURCES_DIR = os.path.join(FILE_DIR, "res")
@@ -41,13 +32,40 @@ class P300Paradigm(Paradigm):
         for k, v in self.stim_labels.items():
             config.TRIAL_LABELS[v] = k
 
+        self.questions_file = 'questions_everyone.xlsx'
+
+    def run_expreriment_with_queue(self, q: multiprocessing.Queue):
+        recorder = q[-1]
+        self.psychopy_exp(recorder)
+
+
 
     def start(self, recorder: Recorder):
-        self.psychopy_exp(recorder)
+        # RecorderManager.register('Recorder', lambda: recorder)
+        # with multiprocessing.Manager() as m:
+        #     l = m.list()
+        #     l.append(recorder)
+            # q.put(recorder)
+        q = multiprocessing.Queue()
+        proc = multiprocessing.Process(target=self.psychopy_exp, args=(q,))
+        proc.start()
+        while proc.is_alive():
+            try:
+                marker = q.get(timeout=0.5)
+                recorder.push_marker(marker)
+            except Empty:
+                continue
+            except OSError:
+                break
+            except ValueError:
+                break
+        if proc.is_alive():
+            proc.join()
+        # self.psychopy_exp(recorder)
         # start a trial
         # recorder.push_marker("this trial's marker")
 
-    def psychopy_exp(self, recorder):
+    def psychopy_exp(self, q: multiprocessing.Queue):
         """
         This experiment was created using PsychoPy3 Experiment Builder (v2021.2.3),
             on April 04, 2022, at 19:43
@@ -59,7 +77,13 @@ class P300Paradigm(Paradigm):
 
         """
 
+        from psychopy import sound, gui, visual, core, data, logging
+        from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
+                                        STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 
+        import os  # handy system and path functions
+
+        from psychopy.hardware import keyboard
 
         # Store info about the experiment session
         psychopyVersion = '2021.2.3'
@@ -167,7 +191,7 @@ class P300Paradigm(Paradigm):
             win=win, name='polygon', vertices='cross',
             size=(0.25, 0.25),
             ori=0.0, pos=(0, 0),
-            lineWidth=1.0, colorSpace='rgb', lineColor='-1, -1, -1', fillColor='-1, -1, -1',
+            lineWidth=1.0, colorSpace='rgb', lineColor=[1,1,1], fillColor=[1,1,1],
             opacity=None, depth=0.0, interpolate=True)
 
         # Initialize components for Routine "trial"
@@ -591,7 +615,7 @@ class P300Paradigm(Paradigm):
         # set up handler to look after randomisation of conditions etc
         questions = data.TrialHandler(nReps=1.0, method='fullRandom',
                                       extraInfo=expInfo, originPath=-1,
-                                      trialList=data.importConditions(os.path.join(RESCOURCES_DIR, 'questions_everyone.xlsx')),
+                                      trialList=data.importConditions(os.path.join(RESCOURCES_DIR, self.questions_file)),
                                       seed=None, name='questions')
         thisExp.addLoop(questions)  # add the loop to the experiment
         thisQuestion = questions.trialList[0]  # so we can initialise stimuli with some values
@@ -761,11 +785,9 @@ class P300Paradigm(Paradigm):
                             continueRoutine = True
                             break  # at least one component has not yet finished
 
-                    target = thisQuestion['answer']
-                    marker = self.stim_labels[self.LABEL_TARGET] if target == thisTrial['stim'] else self.stim_labels[self.LABEL_DISTRACTOR]
+
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                        recorder.push_marker(marker)
                         win.flip()
 
                 # -------Ending Routine "cross"-------
@@ -806,6 +828,10 @@ class P300Paradigm(Paradigm):
                     frameN = frameN + 1  # number of completed frames (so 0 is the first frame)
                     # update/draw components on each frame
 
+                    target = thisQuestion['answer']
+                    marker = 0
+
+
                     # *target_word* updates
                     if target_word.status == NOT_STARTED and tThisFlip >= 0.0 - frameTolerance:
                         # keep track of start time/frame for later
@@ -829,6 +855,9 @@ class P300Paradigm(Paradigm):
                         target_sound.tStart = t  # local t and not account for scr refresh
                         target_sound.tStartRefresh = tThisFlipGlobal  # on global time
                         target_sound.play(when=win)  # sync with win flip
+
+                        marker = self.stim_labels[self.LABEL_TARGET] if target == thisTrial['stim'] else \
+                            self.stim_labels[self.LABEL_DISTRACTOR]
                     if target_sound.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
                         if tThisFlipGlobal > target_sound.tStartRefresh + 1 - frameTolerance:
@@ -854,6 +883,7 @@ class P300Paradigm(Paradigm):
 
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
+                        q.put(marker)
                         win.flip()
 
                 # -------Ending Routine "trial"-------
@@ -953,4 +983,6 @@ class P300Paradigm(Paradigm):
         # make sure everything is closed down
         thisExp.abort()  # or data files will save again on exit
         win.close()
-        # win.close() #core.quit()()
+        q.close()
+        # win.close() #
+        core.quit()

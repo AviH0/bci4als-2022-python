@@ -9,9 +9,12 @@ class BaseClassifier:
     """
 
     def __init__(self, config: Config):
-        self.__config = config
+        self._config = config
 
     def fit(self, data=mne.Epochs):
+        raise NotImplementedError
+
+    def train_test_split(self, data: mne.Epochs):
         raise NotImplementedError
 
     def predict(self, data: mne.Epochs):

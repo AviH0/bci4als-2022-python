@@ -10,12 +10,13 @@ class P300Classifier(BaseClassifier):
         super().__init__(config)
 
     def fit(self, data=mne.Epochs):
-        event_dict = {v: k for k, v in self.__config.TRIAL_LABELS.items()}
-
-        super().fit(data)
+        event_dict = {v: k for k, v in self._config.TRIAL_LABELS.items()}
 
     def predict(self, data: mne.Epochs):
-        super().predict(data)
+        pass
 
     def evaluate(self, data: mne.Epochs):
-        super().evaluate(data)
+        pass
+
+    def train_test_split(self, data: mne.Epochs):
+        return None, None

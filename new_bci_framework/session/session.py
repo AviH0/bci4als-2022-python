@@ -31,7 +31,7 @@ class Session:
         raise NotImplementedError
 
     def save_session(self):
-        with open(os.path.join(self.config.SESSION_SAVE_DIR, SESSION_SAVE_FILE_PICKLE), 'w') as savefile:
+        with open(os.path.join(self.config.SESSION_SAVE_DIR, SESSION_SAVE_FILE_PICKLE), 'wb') as savefile:
             Pickler(savefile).dump(self)
 
     @staticmethod
@@ -41,5 +41,5 @@ class Session:
         :param session_dir: saved session directory
         :return: Session object
         """
-        with open(os.path.join(session_dir, SESSION_SAVE_FILE_PICKLE), 'w') as savefile:
+        with open(os.path.join(session_dir, SESSION_SAVE_FILE_PICKLE), 'rb') as savefile:
             return pickle.load(savefile)

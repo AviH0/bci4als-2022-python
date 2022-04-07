@@ -31,7 +31,7 @@ class OfflineSession(Session):
         self.epoched_data = self.preprocessor.run_pipeline(self.raw_data)
 
     def run_classifier(self):
-        train_data, test_data = train_test_split(self.epoched_data)
+        train_data, test_data = self.classifier.train_test_split(self.epoched_data)
         self.classifier.fit(train_data)
         evaluation = self.classifier.evaluate(test_data)
 
