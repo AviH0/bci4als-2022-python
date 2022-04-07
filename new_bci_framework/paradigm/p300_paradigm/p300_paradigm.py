@@ -208,9 +208,11 @@ class P300Paradigm(Paradigm):
         target_sound.setVolume(1.0)
 
         # Initialize components for Routine "finished"
+        questionCounter = 0
+        totalQuestions = 0
         finishedClock = core.Clock()
         how_much = visual.TextStim(win=win, name='how_much',
-                                   text='1/30',
+                                   text=f'{questionCounter}/{totalQuestions}',
                                    font='Open Sans',
                                    pos=(0, 0), height=0.15, wrapWidth=None, ori=0.0,
                                    color='white', colorSpace='rgb', opacity=None,
@@ -617,6 +619,7 @@ class P300Paradigm(Paradigm):
                                       extraInfo=expInfo, originPath=-1,
                                       trialList=data.importConditions(os.path.join(RESCOURCES_DIR, self.questions_file)),
                                       seed=None, name='questions')
+        totalQuestions = len(questions.trialList)
         thisExp.addLoop(questions)  # add the loop to the experiment
         thisQuestion = questions.trialList[0]  # so we can initialise stimuli with some values
         # abbreviate parameter names if possible (e.g. rgb = thisQuestion.rgb)
@@ -919,6 +922,8 @@ class P300Paradigm(Paradigm):
             frameN = -1
 
             # -------Run Routine "finished"-------
+            questionCounter += 1
+            how_much.setText(f"{questionCounter}/{totalQuestions}")
             while continueRoutine and routineTimer.getTime() > 0:
                 # get current time
                 t = finishedClock.getTime()
