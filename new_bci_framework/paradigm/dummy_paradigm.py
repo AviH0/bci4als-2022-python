@@ -5,7 +5,7 @@ from ..paradigm.paradigm import Paradigm
 from ..config.config import Config
 from ..recorder.recorder import Recorder
 
-NUM_TRIALS = 30
+NUM_TRIALS = 8
 
 class DummyParadigm(Paradigm):
     """

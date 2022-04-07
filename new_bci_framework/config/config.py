@@ -3,6 +3,8 @@ import os.path
 import sys
 from typing import Dict
 
+from matplotlib import pyplot as plt
+
 
 class Config:
     """
@@ -16,9 +18,11 @@ class Config:
                  show_plots=False,
                  show_live_data=True,
                  root_dir=".",
-                 live_data_should_block=False
+                 live_data_should_block=False,
+                 matplotlib_backend='QtAgg'
                  ):
 
+        plt.switch_backend(matplotlib_backend)
 
         self.SUBJECT_NAME = subject_name
         self.DATE = datetime.datetime.now().date().isoformat()
@@ -42,6 +46,8 @@ class Config:
         # Set trial start and end times in seconds relative to stimulus (for example -0.2, 0.9)
         self.TRIAL_START_TIME = -0.1
         self.TRIAL_END_TIME = 0.5
+
+        self.MIN_TARGET_APPEARANCES = 2
 
         # PREPROCESSING:
         self.HIGH_PASS_FILTER = 0.1
