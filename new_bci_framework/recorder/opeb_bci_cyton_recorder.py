@@ -57,6 +57,9 @@ class CytonRecorder(Recorder):
         self.__on()
 
     def push_marker(self, marker):
+        if not marker:
+            # zero is default value so do nothing
+            return
         if marker not in self._config.TRIAL_LABELS:
             self.__seen_markers += 1
             self._config.TRIAL_LABELS[marker] = f"Stimulus_{self.__seen_markers}"
