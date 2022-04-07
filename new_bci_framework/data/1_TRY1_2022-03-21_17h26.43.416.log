@@ -1,0 +1,29 @@
+0.9377 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+5.0812 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x0000016B99EA4AF0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x0000016B9BB31100>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, units='norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+5.0815 	EXP 	window1: mouseVisible = True
+5.0816 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+5.0816 	EXP 	window1: recordFrameIntervals = False
+5.2471 	EXP 	window1: recordFrameIntervals = True
+5.4307 	EXP 	Screen (0) actual frame rate measured at 60.00Hz
+5.4307 	EXP 	window1: recordFrameIntervals = False
+5.4309 	EXP 	window1: mouseVisible = False
+6.4414 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, image='C:/Users/yarde/Desktop/instructions/Slide1.JPG', interpolate=True, mask=None, maskParams=None, name='image', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([2., 2.]), texRes=128.0, units='norm', win=Window(...))
+6.4499 	EXP 	Created target_quest = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='target_quest', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+6.4518 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([-1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([-1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=1.0, name='polygon', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([0.25, 0.25]), units='norm', vertices=ndarray(...), win=Window(...), windingRule=None)
+6.4531 	EXP 	Created target_word = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.2, italic=False, languageStyle='LTR', name='target_word', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+6.6957 	EXP 	Sound target_sound set volume 1.000
+6.7560 	EXP 	image: autoDraw = True
+11.5192 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/questions.xlsx as conditions, 5 conditions, 1 params
+11.5195 	EXP 	Created sequence: fullRandom, trialTypes=5, nReps=1, seed=None
+11.5196 	EXP 	New trial (rep=0, index=0): {'Question_stim': 'האם יש לך חמישה ילדים?'}
+11.5507 	EXP 	image: autoDraw = False
+11.5507 	EXP 	target_quest: height = 0.05
+11.5507 	EXP 	target_quest: height = 0.05
+11.5507 	EXP 	target_quest: text = 'האם יש לך חמישה ילדים?'
+11.5507 	EXP 	target_quest: autoDraw = True
+13.0374 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx as conditions, 3 conditions, 4 params
+13.0376 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+13.0378 	EXP 	New trial (rep=0, index=0): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+13.0479 	EXP 	target_quest: autoDraw = False
+13.0479 	EXP 	polygon: autoDraw = True
+13.9121 	EXP 	window1: mouseVisible = True

@@ -1,0 +1,196 @@
+0.9858 	WARNING 	We strongly recommend you activate the PTB sound engine in PsychoPy prefs as the preferred audio engine. Its timing is vastly superior. Your prefs are currently set to use ['sounddevice', 'PTB', 'pyo', 'pygame'] (in that order).
+5.7522 	EXP 	Created window1 = Window(allowGUI=False, allowStencil=False, autoLog=True, backendConf=UNKNOWN, bitsMode=UNKNOWN, blendMode='avg', bpc=(8, 8, 8), color=array([0, 0, 0]), colorSpace='rgb', depthBits=8, fullscr=<method-wrapper '__getattribute__' of attributeSetter object at 0x000001A0E5FD4AF0>, gamma=None, gammaErrorPolicy='raise', lms=UNKNOWN, monitor=<psychopy.monitors.calibTools.Monitor object at 0x000001A0E6C910D0>, multiSample=False, name='window1', numSamples=2, pos=(0, 0), screen=0, size=array([1920, 1080]), stencilBits=0, stereo=False, units='norm', useFBO=True, useRetina=False, viewOri=0.0, viewPos=None, viewScale=None, waitBlanking=True, winType='pyglet')
+5.7526 	EXP 	window1: mouseVisible = True
+5.7527 	EXP 	window1: Attempting to measure frame rate of screen (0) ...
+5.7527 	EXP 	window1: recordFrameIntervals = False
+5.9181 	EXP 	window1: recordFrameIntervals = True
+6.1017 	EXP 	Screen (0) actual frame rate measured at 60.01Hz
+6.1017 	EXP 	window1: recordFrameIntervals = False
+7.1156 	EXP 	Created image = ImageStim(__class__=<class 'psychopy.visual.image.ImageStim'>, anchor=('center', 'center'), autoLog=True, color=array([1., 1., 1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, image='C:/Users/yarde/Desktop/instructions/Slide1.JPG', interpolate=True, mask=None, maskParams=None, name='image', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([2., 2.]), texRes=128.0, units='norm', win=Window(...))
+7.1241 	EXP 	Created target_quest = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.05, italic=False, languageStyle='LTR', name='target_quest', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+7.1259 	EXP 	Created polygon = ShapeStim(__class__=<class 'psychopy.visual.shape.ShapeStim'>, anchor=('center', 'center'), autoDraw=False, autoLog=True, closeShape=True, color=method-wrapper(...), colorSpace='rgb', contrast=None, depth=0.0, fillColor=array([-1., -1., -1.]), fillColorSpace='rgb', fillRGB=array([-1., -1., -1.]), interpolate=True, lineColor=array([-1., -1., -1.]), lineColorSpace='rgb', lineRGB=array([-1., -1., -1.]), lineWidth=1.0, name='polygon', opacity=1, ori=0.0, pos=array([0., 0.]), size=array([0.25, 0.25]), units='norm', vertices=ndarray(...), win=Window(...), windingRule=None)
+7.1273 	EXP 	Created target_word = TextStim(__class__=<class 'psychopy.visual.text.TextStim'>, alignHoriz=method-wrapper(...), alignText='center', alignVert=method-wrapper(...), anchorHoriz='center', anchorVert='center', antialias=True, autoLog=True, bold=False, color=array([-1., -1., -1.]), colorSpace='rgb', contrast=1.0, depth=0.0, flipHoriz=False, flipVert=False, font='Open Sans', fontFiles=[], height=0.2, italic=False, languageStyle='LTR', name='target_word', opacity=1, ori=0.0, pos=array([0., 0.]), rgb=UNKNOWN, text='', units='norm', win=Window(...), wrapWidth=1)
+7.3468 	EXP 	Sound target_sound set volume 1.000
+7.4106 	EXP 	image: autoDraw = True
+7.8746 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/questions.xlsx as conditions, 5 conditions, 1 params
+7.8750 	EXP 	Created sequence: fullRandom, trialTypes=5, nReps=2, seed=None
+7.8752 	EXP 	New trial (rep=0, index=0): {'Question_stim': 'האם את גרה באשדוד?'}
+7.9056 	EXP 	image: autoDraw = False
+7.9056 	EXP 	target_quest: height = 0.05
+7.9056 	EXP 	target_quest: height = 0.05
+7.9056 	EXP 	target_quest: text = 'האם את גרה באשדוד?'
+7.9056 	EXP 	target_quest: autoDraw = True
+9.3927 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx as conditions, 3 conditions, 4 params
+9.3929 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+9.3931 	EXP 	New trial (rep=0, index=0): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+9.4028 	EXP 	target_quest: autoDraw = False
+9.4028 	EXP 	polygon: autoDraw = True
+11.4024 	EXP 	polygon: autoDraw = False
+11.4024 	EXP 	target_word: height = 0.2
+11.4024 	EXP 	target_word: height = 0.2
+11.4024 	EXP 	target_word: text = 'אל'
+11.4024 	EXP 	target_word: autoDraw = True
+12.0870 	EXP 	New trial (rep=0, index=1): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+12.1029 	EXP 	target_word: autoDraw = False
+12.1029 	EXP 	polygon: autoDraw = True
+14.1020 	EXP 	polygon: autoDraw = False
+14.1020 	EXP 	target_word: height = 0.2
+14.1020 	EXP 	target_word: height = 0.2
+14.1020 	EXP 	target_word: text = 'ןכ'
+14.1020 	EXP 	target_word: autoDraw = True
+14.7866 	EXP 	New trial (rep=0, index=2): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+14.8031 	EXP 	target_word: autoDraw = False
+14.8031 	EXP 	polygon: autoDraw = True
+16.8019 	EXP 	polygon: autoDraw = False
+16.8019 	EXP 	target_word: text = 'ןכ'
+16.8019 	EXP 	target_word: autoDraw = True
+17.4864 	EXP 	New trial (rep=1, index=0): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+17.5029 	EXP 	target_word: autoDraw = False
+17.5029 	EXP 	polygon: autoDraw = True
+19.5013 	EXP 	polygon: autoDraw = False
+19.5013 	EXP 	target_word: height = 0.2
+19.5013 	EXP 	target_word: height = 0.2
+19.5013 	EXP 	target_word: text = 'אל'
+19.5013 	EXP 	target_word: autoDraw = True
+20.1855 	EXP 	New trial (rep=1, index=1): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+20.2017 	EXP 	target_word: autoDraw = False
+20.2017 	EXP 	polygon: autoDraw = True
+22.2009 	EXP 	polygon: autoDraw = False
+22.2009 	EXP 	target_word: height = 0.2
+22.2009 	EXP 	target_word: height = 0.2
+22.2009 	EXP 	target_word: text = 'שער'
+22.2009 	EXP 	target_word: autoDraw = True
+22.8856 	EXP 	New trial (rep=1, index=2): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+22.9016 	EXP 	target_word: autoDraw = False
+22.9016 	EXP 	polygon: autoDraw = True
+24.9013 	EXP 	polygon: autoDraw = False
+24.9013 	EXP 	target_word: text = 'שער'
+24.9013 	EXP 	target_word: autoDraw = True
+25.5846 	EXP 	New trial (rep=0, index=1): {'Question_stim': 'האם לאריאל יש שני בנים?'}
+25.6009 	EXP 	target_word: autoDraw = False
+25.6009 	EXP 	target_quest: height = 0.05
+25.6009 	EXP 	target_quest: height = 0.05
+25.6009 	EXP 	target_quest: text = 'האם לאריאל יש שני בנים?'
+25.6009 	EXP 	target_quest: autoDraw = True
+27.0897 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx as conditions, 3 conditions, 4 params
+27.0900 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+27.0901 	EXP 	New trial (rep=0, index=0): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+27.1007 	EXP 	target_quest: autoDraw = False
+27.1007 	EXP 	polygon: autoDraw = True
+29.1004 	EXP 	polygon: autoDraw = False
+29.1004 	EXP 	target_word: height = 0.2
+29.1004 	EXP 	target_word: height = 0.2
+29.1004 	EXP 	target_word: text = 'אל'
+29.1004 	EXP 	target_word: autoDraw = True
+29.7847 	EXP 	New trial (rep=0, index=1): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+29.8006 	EXP 	target_word: autoDraw = False
+29.8006 	EXP 	polygon: autoDraw = True
+31.8000 	EXP 	polygon: autoDraw = False
+31.8000 	EXP 	target_word: height = 0.2
+31.8000 	EXP 	target_word: height = 0.2
+31.8000 	EXP 	target_word: text = 'שער'
+31.8000 	EXP 	target_word: autoDraw = True
+32.4843 	EXP 	New trial (rep=0, index=2): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+32.5002 	EXP 	target_word: autoDraw = False
+32.5002 	EXP 	polygon: autoDraw = True
+34.4996 	EXP 	polygon: autoDraw = False
+34.4996 	EXP 	target_word: height = 0.2
+34.4996 	EXP 	target_word: height = 0.2
+34.4996 	EXP 	target_word: text = 'ןכ'
+34.4996 	EXP 	target_word: autoDraw = True
+35.1837 	EXP 	New trial (rep=1, index=0): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+35.1999 	EXP 	target_word: autoDraw = False
+35.1999 	EXP 	polygon: autoDraw = True
+37.1998 	EXP 	polygon: autoDraw = False
+37.1998 	EXP 	target_word: height = 0.2
+37.1998 	EXP 	target_word: height = 0.2
+37.1998 	EXP 	target_word: text = 'שער'
+37.1998 	EXP 	target_word: autoDraw = True
+37.8830 	EXP 	New trial (rep=1, index=1): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+37.8994 	EXP 	target_word: autoDraw = False
+37.8994 	EXP 	polygon: autoDraw = True
+39.8988 	EXP 	polygon: autoDraw = False
+39.8988 	EXP 	target_word: height = 0.2
+39.8988 	EXP 	target_word: height = 0.2
+39.8988 	EXP 	target_word: text = 'ןכ'
+39.8988 	EXP 	target_word: autoDraw = True
+40.5828 	EXP 	New trial (rep=1, index=2): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+40.5991 	EXP 	target_word: autoDraw = False
+40.5991 	EXP 	polygon: autoDraw = True
+42.5985 	EXP 	polygon: autoDraw = False
+42.5985 	EXP 	target_word: height = 0.2
+42.5985 	EXP 	target_word: height = 0.2
+42.5985 	EXP 	target_word: text = 'אל'
+42.5985 	EXP 	target_word: autoDraw = True
+43.2829 	EXP 	New trial (rep=0, index=2): {'Question_stim': 'האם לאריאל יש שני בנים?'}
+43.2989 	EXP 	target_word: autoDraw = False
+43.2989 	EXP 	target_quest: text = 'האם לאריאל יש שני בנים?'
+43.2989 	EXP 	target_quest: autoDraw = True
+44.7875 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx as conditions, 3 conditions, 4 params
+44.7877 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+44.7879 	EXP 	New trial (rep=0, index=0): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+44.7982 	EXP 	target_quest: autoDraw = False
+44.7982 	EXP 	polygon: autoDraw = True
+46.7980 	EXP 	polygon: autoDraw = False
+46.7980 	EXP 	target_word: height = 0.2
+46.7980 	EXP 	target_word: height = 0.2
+46.7980 	EXP 	target_word: text = 'ןכ'
+46.7980 	EXP 	target_word: autoDraw = True
+47.4821 	EXP 	New trial (rep=0, index=1): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+47.4981 	EXP 	target_word: autoDraw = False
+47.4981 	EXP 	polygon: autoDraw = True
+49.4985 	EXP 	polygon: autoDraw = False
+49.4985 	EXP 	target_word: height = 0.2
+49.4985 	EXP 	target_word: height = 0.2
+49.4985 	EXP 	target_word: text = 'שער'
+49.4985 	EXP 	target_word: autoDraw = True
+50.1821 	EXP 	New trial (rep=0, index=2): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+50.1979 	EXP 	target_word: autoDraw = False
+50.1979 	EXP 	polygon: autoDraw = True
+52.1973 	EXP 	polygon: autoDraw = False
+52.1973 	EXP 	target_word: height = 0.2
+52.1973 	EXP 	target_word: height = 0.2
+52.1973 	EXP 	target_word: text = 'אל'
+52.1973 	EXP 	target_word: autoDraw = True
+52.8812 	EXP 	New trial (rep=1, index=0): {'stim': 'whiteNoise', 'word': 'שער', 'color': 'grey', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\PinkNoise.wav'}
+52.8978 	EXP 	target_word: autoDraw = False
+52.8978 	EXP 	polygon: autoDraw = True
+54.8977 	EXP 	polygon: autoDraw = False
+54.8977 	EXP 	target_word: height = 0.2
+54.8977 	EXP 	target_word: height = 0.2
+54.8977 	EXP 	target_word: text = 'שער'
+54.8977 	EXP 	target_word: autoDraw = True
+55.5809 	EXP 	New trial (rep=1, index=1): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+55.5972 	EXP 	target_word: autoDraw = False
+55.5972 	EXP 	polygon: autoDraw = True
+57.5966 	EXP 	polygon: autoDraw = False
+57.5966 	EXP 	target_word: height = 0.2
+57.5966 	EXP 	target_word: height = 0.2
+57.5966 	EXP 	target_word: text = 'ןכ'
+57.5966 	EXP 	target_word: autoDraw = True
+58.2813 	EXP 	New trial (rep=1, index=2): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+58.2970 	EXP 	target_word: autoDraw = False
+58.2970 	EXP 	polygon: autoDraw = True
+60.2963 	EXP 	polygon: autoDraw = False
+60.2963 	EXP 	target_word: height = 0.2
+60.2963 	EXP 	target_word: height = 0.2
+60.2963 	EXP 	target_word: text = 'אל'
+60.2963 	EXP 	target_word: autoDraw = True
+60.9804 	EXP 	New trial (rep=0, index=3): {'Question_stim': 'האם השם שלך הוא חנה?'}
+60.9961 	EXP 	target_word: autoDraw = False
+60.9961 	EXP 	target_quest: height = 0.05
+60.9961 	EXP 	target_quest: height = 0.05
+60.9961 	EXP 	target_quest: text = 'האם השם שלך הוא חנה?'
+60.9961 	EXP 	target_quest: autoDraw = True
+62.4861 	EXP 	Imported C:/Users/yarde/Documents/GitHub/BCI4ALS-MI/stim_words.xlsx as conditions, 3 conditions, 4 params
+62.4864 	EXP 	Created sequence: fullRandom, trialTypes=3, nReps=2, seed=None
+62.4865 	EXP 	New trial (rep=0, index=0): {'stim': 'no', 'word': 'אל', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\NOhebYardenSHORT.wav'}
+62.4958 	EXP 	target_quest: autoDraw = False
+62.4958 	EXP 	polygon: autoDraw = True
+64.4960 	EXP 	polygon: autoDraw = False
+64.4960 	EXP 	target_word: text = 'אל'
+64.4960 	EXP 	target_word: autoDraw = True
+65.1806 	EXP 	New trial (rep=0, index=1): {'stim': 'yes', 'word': 'ןכ', 'color': 'black', 'sound_target': 'C:\\Users\\yarde\\Documents\\GitHub\\BCI4ALS-MI\\YEShebYardenSHORT.wav'}
+65.1960 	EXP 	target_word: autoDraw = False
+65.1960 	EXP 	polygon: autoDraw = True
+67.1701 	EXP 	window1: mouseVisible = True
