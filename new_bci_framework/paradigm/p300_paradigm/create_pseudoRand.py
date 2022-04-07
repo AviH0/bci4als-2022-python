@@ -8,7 +8,9 @@ def check_no_adj_tar_rep(df):
     # check indices of each type
     check_rep_no = df[df['stim'] == 'no'].index.values
     check_rep_yes = df[df['stim'] == 'yes'].index.values
-    index_dist = df[df['stim'] != 'no' and df['stim'] != 'yes'].index.values
+    bool_no_no = df['stim'] != 'no'
+    bool_no_yes = df['stim'] != 'yes'
+    index_dist = df[bool_no_no & bool_no_yes].index.values
 
     # calculate differences of indices- to check if adjacent index
     dif_no = np.diff(check_rep_no)
@@ -34,7 +36,7 @@ def check_no_adj_tar_rep(df):
     if 1 in dif_yes:
         for change_2 in range(len(ind_yes_1)):
             tar, dist = df.iloc[ind_yes_1[change_2]].copy(), df.iloc[ind_sand[2*counter_dist]].copy()
-            df.iloc[ind_no_1[change_2]], df.iloc[ind_sand[2*counter_dist]] = dist, tar
+            df.iloc[ind_yes_1[change_2]], df.iloc[ind_sand[2*counter_dist]] = dist, tar
             counter_dist = counter_dist + 1
 
     return df
@@ -53,10 +55,11 @@ def create_pseudo_rand(list_stims, num_target_min):
     df = pd.concat([target_repeated, other_repeated], ignore_index=True)
     df_rand_ord = df.sample(frac=1, ignore_index=True)
 
+    # export to excel
+    # df_rand_ord.to_excel("CHECK.xlsx", index = False)
+
     # Now check that the same target does not repeat straightaway
     df_final = check_no_adj_tar_rep(df_rand_ord)
-    # export to excel
-    # df_final.to_excel("all_stim_rand_order.xlsx", index = False)
 
     return df_final.to_dict('records')
 
