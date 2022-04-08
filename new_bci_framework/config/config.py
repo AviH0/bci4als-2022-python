@@ -50,7 +50,7 @@ class Config:
         self.MIN_TARGET_APPEARANCES = 2
 
         # PREPROCESSING:
-        self.HIGH_PASS_FILTER = 0.1
+        self.HIGH_PASS_FILTER = 0.5
         self.LOW_PASS_FILTER = 40
         self.NOTCH_FILTER = 50
 
