@@ -189,9 +189,9 @@ class P300Paradigm(Paradigm):
         crossClock = core.Clock()
         polygon = visual.ShapeStim(
             win=win, name='polygon', vertices='cross',
-            size=(0.25, 0.25),
+            size=(0.15, 0.15),
             ori=0.0, pos=(0, 0),
-            lineWidth=1.0, colorSpace='rgb', lineColor=[1,1,1], fillColor=[1,1,1],
+            lineWidth=1.0, colorSpace='rgb', lineColor='black', fillColor='black',
             opacity=None, depth=0.0, interpolate=True)
 
         # Initialize components for Routine "trial"
