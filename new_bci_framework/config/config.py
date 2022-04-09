@@ -33,12 +33,15 @@ class Config:
         if not os.path.isdir(self.SESSION_SAVE_DIR):
             os.mkdir(self.SESSION_SAVE_DIR)
 
-        self.MONTAGE_FILENAME = os.path.join(__file__, "..", "..", "recorder", "montage_ultracortex.loc")
 
+        # Recorder settings:
+        self.MONTAGE_FILENAME = os.path.join(__file__, "..", "..", "recorder", "montage_ultracortex.loc")
         self.SHOW_LIVE_DATA = show_live_data
         if self.__is_macos():
             live_data_should_block = True  # Macos doesn't support GUI manipulation on non-main threads.
         self.LIVE_DATA_SHOULD_BLOCK = live_data_should_block
+        self.GAIN_VALUE = 6
+
         self.SHOW_PLOTS = show_plots
 
         # This needs to be an dict where the keys are stim values and the values are their labels
