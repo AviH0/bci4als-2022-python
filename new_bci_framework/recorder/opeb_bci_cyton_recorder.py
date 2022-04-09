@@ -19,6 +19,8 @@ from ..config.config import Config
 
 class CytonRecorder(Recorder):
 
+
+
     def __init__(self, config: Config,
                  board_id: int = BoardIds.CYTON_DAISY_BOARD.value,
                  ip_port: int = 6677,
@@ -105,14 +107,33 @@ class CytonRecorder(Recorder):
     def __get_board_names(self) -> List[str]:
         """The method returns the board's channels"""
         if self.headset == "cyton":
-            return ['C3', 'C4', 'CZ', 'FC1', 'FC2', 'FC5', 'FC6', 'CP1', 'CP2', 'CP5', 'CP6', 'O1', 'O2', '--', '--', '--']
+            return ['C3', 'C4', 'Cz', 'FC1', 'FC2', 'FC5', 'FC6', 'CP1', 'CP2', 'CP5', 'CP6', 'O1', 'O2', 'T8', 'PO3', 'PO4']
         else:
             return self.board.get_eeg_names(self.board_id)
+
+    def __channel_hardware_settings(self, channel_index, gain_setting=3, power_on=True):
+        CHANNELS =  "12345678QWERTYUI"
+        chan = CHANNELS[channel_index]
+        power = 0 if power_on else 1
+        input_type = 0
+        bias = 1 if power_on else 0
+        srb2 = 1 if power_on else 0
+        srb1 = 0
+        self.board.config_board(f"x{chan}{power}{gain_setting}{input_type}{bias}{srb2}{srb1}X")
 
     def __on(self):
         """Turn EEG On"""
         self.__is_recording = True
         self.board.prepare_session()
+
+        if self.board_id == BoardIds.CYTON_DAISY_BOARD:
+            # According to https://docs.openbci.com/Cyton/CytonSDK/#channel-setting-commands
+            GAIN_VALUE_TO_SETTING = {1: 0, 2: 1, 4: 2, 6: 3, 8: 4, 12: 5, 24: 6}
+
+            for i in range(13):
+                self.__channel_hardware_settings(i, gain_setting=GAIN_VALUE_TO_SETTING[self._config.GAIN_VALUE])
+            for i in range(13, 16):
+                self.__channel_hardware_settings(i, power_on=False)
         self.board.start_stream()
 
     def __off(self):
@@ -138,6 +159,11 @@ class CytonRecorder(Recorder):
         :return:
         """
         eeg_data = board_data / 1000000  # BrainFlow returns uV, convert to V for MNE
+
+
+        if self.board_id == BoardIds.CYTON_DAISY_BOARD:
+            # rescale if gain value is not 24:
+            eeg_data *= (24 // self._config.GAIN_VALUE)  # calculation for 24 is here: https://github.com/brainflow-dev/brainflow/blob/master/src/board_controller/openbci/inc/cyton_daisy.h
 
         # Add marker channel:
         # eeg_data = np.stack([eeg_data, self.board.get_marker_channel(self.board_id)])
