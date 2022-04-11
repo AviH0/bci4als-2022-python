@@ -26,12 +26,17 @@ class Config:
 
         self.SUBJECT_NAME = subject_name
         self.DATE = datetime.datetime.now().date().isoformat()
-        self.SESSION_SAVE_DIR = f"{root_dir}/Session_{self.DATE}_{self.SUBJECT_NAME}"
+        base_session_dir = f"{root_dir}/Session_{self.DATE}_{self.SUBJECT_NAME}"
+        subject_count = 1
+        self.SESSION_SAVE_DIR = f"{base_session_dir}-{subject_count}"
 
         if not os.path.isdir(root_dir):
             os.mkdir(root_dir)
-        if not os.path.isdir(self.SESSION_SAVE_DIR):
-            os.mkdir(self.SESSION_SAVE_DIR)
+        while os.path.isdir(self.SESSION_SAVE_DIR):
+            subject_count += 1
+            self.SESSION_SAVE_DIR = f"{base_session_dir}-{subject_count}"
+        os.mkdir(self.SESSION_SAVE_DIR)
+
 
 
         # Recorder settings:
