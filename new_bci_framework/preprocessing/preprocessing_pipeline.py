@@ -16,6 +16,7 @@ class PreprocessingPipeline:
 
     def __init__(self, config: Config):
         self._config = config
+        self.__original_data = None
         self._save_dir = f"{self._config.SESSION_SAVE_DIR}/preprocessor"
         if not os.path.isdir(self._save_dir):
             os.mkdir(self._save_dir)
@@ -34,6 +35,8 @@ class PreprocessingPipeline:
         return epochs
 
     def __filter(self,  data: mne.io.Raw) -> None:
+        self.__original_data = data.copy()
+        data.save(os.path.join(self._save_dir, "original_raw.fif"), overwrite=True)
         data.filter(l_freq=self._config.LOW_PASS_FILTER, h_freq=self._config.HIGH_PASS_FILTER)
         if self._config.NOTCH_FILTER:
             data.notch_filter(self._config.NOTCH_FILTER)
