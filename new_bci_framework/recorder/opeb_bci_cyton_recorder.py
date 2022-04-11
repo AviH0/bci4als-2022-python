@@ -207,7 +207,7 @@ class CytonRecorder(Recorder):
         :return: mne_raw data
         """
 
-        indices = [self.eeg_names.index(ch) for ch in ch_names]
+        indices = [self.eeg_names.index(ch) + 1 for ch in ch_names]
 
         if full:
             self.__get_board_data()
