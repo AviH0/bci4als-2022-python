@@ -52,8 +52,8 @@ class Config:
         # This needs to be an dict where the keys are stim values and the values are their labels
         self.TRIAL_LABELS: Dict[int, str] = dict()
         # Set trial start and end times in seconds relative to stimulus (for example -0.2, 0.9)
-        self.TRIAL_START_TIME = -0.1
-        self.TRIAL_END_TIME = 0.5
+        self.TRIAL_START_TIME = -0.2
+        self.TRIAL_END_TIME = 1.1
 
         self.MIN_TARGET_APPEARANCES = 2
 
