@@ -112,10 +112,10 @@ class CytonRecorder(Recorder):
             return self.board.get_eeg_names(self.board_id)
 
     def __channel_hardware_settings(self, channel_index, gain_setting=3, power_on=True):
-        CHANNELS =  "12345678QWERTYUI"
+        CHANNELS = "12345678QWERTYUI"
         chan = CHANNELS[channel_index]
         power = 0 if power_on else 1
-        input_type = 0
+        input_type = 0 if power_on else 1
         bias = 1 if power_on else 0
         srb2 = 1 if power_on else 0
         srb1 = 0
