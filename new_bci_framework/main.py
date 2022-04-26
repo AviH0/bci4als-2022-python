@@ -14,7 +14,7 @@ from new_bci_framework.session.offline_session import OfflineSession
 from new_bci_framework.session.session import Session
 
 if __name__ == '__main__':
-    root_dir = os.path.abspath('../sessions')
+    root_dir = os.path.abspath(f'..{os.path.sep}sessions')
     subject_name = input("input subject name")
     kwargs = {'root_dir': root_dir, 'show_live_data': True}
     if subject_name:
