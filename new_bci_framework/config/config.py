@@ -46,7 +46,9 @@ class Config:
             live_data_should_block = True  # Macos doesn't support GUI manipulation on non-main threads.
         self.LIVE_DATA_SHOULD_BLOCK = live_data_should_block
         self.GAIN_VALUE = 6
-
+        self.CYTON_CHANNEL_NAMES = ['C3', 'C4', 'Cz', 'FC1', 'FC2', 'FC5', 'FC6', 'CP1', 'CP2', 'CP5', 'CP6', 'O1', 'O2', 'T8', 'PO3', 'PO4']
+        self.REAL_CHANNEL_INDXS = range(13)
+        self.BAD_CHANNEL_INDXS = range(13, 16)
         self.SHOW_PLOTS = show_plots
 
         # This needs to be an dict where the keys are stim values and the values are their labels
