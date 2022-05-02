@@ -1,25 +1,20 @@
-import atexit
 import threading
-import time
 from typing import Optional, List, Union
 
 import matplotlib.pyplot as plt
 import mne
 import numpy as np
+import serial.tools.list_ports
+from brainflow import BrainFlowInputParams, BoardShim, BoardIds
 from mne.io import RawArray
 from nptyping import NDArray
 
 from .plot_rt_recording import Graph
 from .recorder import Recorder
-import serial.tools.list_ports
-from brainflow import BrainFlowInputParams, BoardShim, BoardIds
-
 from ..config.config import Config
 
 
 class CytonRecorder(Recorder):
-
-
 
     def __init__(self, config: Config,
                  board_id: int = BoardIds.CYTON_DAISY_BOARD.value,
@@ -77,14 +72,13 @@ class CytonRecorder(Recorder):
         return self.__get_raw_data(self.__get_board_names(), full=False)
 
     def plot_live_data(self, block=True) -> Union[None, threading.Thread]:
-        start_plot = lambda: Graph(self.board, self.__get_board_names())
+        start_plot = lambda: Graph(self.board, self.__get_board_names(), self._config)
         if block:
             start_plot()
         else:
             thread = threading.Thread(target=start_plot)
             thread.start()
             return thread
-
 
     def __find_serial_port(self) -> str:
         """
@@ -131,7 +125,8 @@ class CytonRecorder(Recorder):
             GAIN_VALUE_TO_SETTING = {1: 0, 2: 1, 4: 2, 6: 3, 8: 4, 12: 5, 24: 6}
 
             for i in self._config.REAL_CHANNEL_INDXS:
-                self.__channel_hardware_settings(i, gain_setting=GAIN_VALUE_TO_SETTING[self._config.GAIN_VALUE])
+                self.__channel_hardware_settings(i,
+                                                 gain_setting=GAIN_VALUE_TO_SETTING[self._config.GAIN_VALUE])
             for i in self._config.BAD_CHANNEL_INDXS:
                 self.__channel_hardware_settings(i, power_on=False)
         self.board.start_stream()
@@ -160,10 +155,10 @@ class CytonRecorder(Recorder):
         """
         eeg_data = board_data / 1000000  # BrainFlow returns uV, convert to V for MNE
 
-
         if self.board_id == BoardIds.CYTON_DAISY_BOARD:
             # rescale if gain value is not 24:
-            eeg_data *= (24 // self._config.GAIN_VALUE)  # calculation for 24 is here: https://github.com/brainflow-dev/brainflow/blob/master/src/board_controller/openbci/inc/cyton_daisy.h
+            eeg_data *= (
+                        24 // self._config.GAIN_VALUE)  # calculation for 24 is here: https://github.com/brainflow-dev/brainflow/blob/master/src/board_controller/openbci/inc/cyton_daisy.h
 
         # Add marker channel:
         # eeg_data = np.stack([eeg_data, self.board.get_marker_channel(self.board_id)])
@@ -172,7 +167,7 @@ class CytonRecorder(Recorder):
         event_dict = {v: k for k, v in self._config.TRIAL_LABELS.items()}
         events = mne.find_events(marker_raw, stim_channel="stim", output="onset")
         if events is not None:
-            fig = mne.viz.plot_events(events, show=False, event_id=event_dict, sfreq=self.sfreq)
+            fig = mne.viz.plot_events(events, show=False, event_id=event_dict, sfreq=self.sfreq, on_missing='warn')
             fig.savefig(f"{self._data_dir}/events.png")
         if self._config.SHOW_PLOTS:
             plt.show(block=False)
@@ -186,7 +181,8 @@ class CytonRecorder(Recorder):
         info.set_montage(montage)
         raw = mne.io.RawArray(eeg_data, info, verbose=False)
         raw.add_channels([marker_raw])
-        drop_channels = [name for index, name in enumerate(ch_names) if index in self._config.BAD_CHANNEL_INDXS]
+        drop_channels = [name for index, name in enumerate(ch_names) if
+                         index in self._config.BAD_CHANNEL_INDXS]
         return raw.drop_channels(drop_channels)
 
     def __get_board_data(self) -> NDArray:

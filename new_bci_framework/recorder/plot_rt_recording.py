@@ -1,30 +1,25 @@
-import argparse
-import logging
-
 import brainflow
 import numpy as np
-import pyqtgraph
 import pyqtgraph as pg
+from brainflow.board_shim import BoardShim, BrainFlowError
+from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations
 from pyqtgraph import ViewBox, intColor
 from pyqtgraph.Qt import QtGui, QtCore
 
-from brainflow.board_shim import BoardShim, BrainFlowInputParams, BoardIds, BrainFlowError
-from brainflow.data_filter import DataFilter, FilterTypes, DetrendOperations
-
 
 class Graph:
-    def __init__(self, board_shim, ch_names):
+    def __init__(self, board_shim, ch_names, config):
         self.board_id = board_shim.get_board_id()
         self.board_shim = board_shim
         self.exg_channels = BoardShim.get_exg_channels(self.board_id)
         self.sampling_rate = BoardShim.get_sampling_rate(self.board_id)
         self.update_speed_ms = 50
-        self.window_size = 4
-        self.num_points = self.window_size * self.sampling_rate + 24
+        self.window_size = 5
+        self.num_points = self.window_size * self.sampling_rate
         self.ch_names = ch_names
         self.app = QtGui.QApplication([])
         self.win = pg.GraphicsWindow(title='BrainFlow Plot',size=(800, 600))
-
+        self.config = config
         self._init_timeseries()
 
         timer = QtCore.QTimer()
@@ -41,7 +36,7 @@ class Graph:
         self.psd.setTitle('Power Spectrum')
         self.psd.enableAutoRange(ViewBox.YAxis)
         self.psd.addLegend((-20, 10))
-        for i in range(len(self.exg_channels)):
+        for i in self.config.REAL_CHANNEL_INDXS:
             p = self.win.addPlot(row=i,col=0)
             p.showAxis('left', True)
             p.setLabel('left', self.ch_names[i], 'uV')
@@ -49,7 +44,7 @@ class Graph:
             p.showAxis('bottom', False)
             p.setMenuEnabled('bottom', False)
             p.disableAutoRange(ViewBox.YAxis)
-            p.setRange(yRange=(-100, 100))
+            p.setRange(yRange=(-50, 50))
             if i == 0:
                 p.setTitle('TimeSeries Plot')
             self.plots.append(p)
@@ -64,9 +59,9 @@ class Graph:
 
     def update(self):
         data = self.board_shim.get_current_board_data(self.num_points)
-        for count, channel in enumerate(self.exg_channels):
+        data *= (24 // self.config.GAIN_VALUE)
+        for count, channel in enumerate(self.exg_channels[:len(list(self.config.REAL_CHANNEL_INDXS))]):
             # plot timeseries
-
 
             DataFilter.detrend(data[channel], DetrendOperations.CONSTANT.value)
             DataFilter.perform_highpass(data[channel], self.sampling_rate, 1, 2,
@@ -83,9 +78,9 @@ class Graph:
             #                             FilterTypes.BUTTERWORTH.value, 0)
             self.curves[count].setData(data[channel].tolist())
             try:
-                amp, freq = DataFilter.get_psd(data[channel], self.sampling_rate, brainflow.WindowFunctions.HAMMING)
+                amp, freq = DataFilter.get_psd(data[channel, -512:], self.sampling_rate, brainflow.WindowFunctions.HAMMING.value)
             except BrainFlowError:
-                # When the data starts arriving there arent 1024 points to do fft so get_psd will raise an error.
+                # When the data starts arriving there arent 512 points to do fft so get_psd will raise an error.
                 freq = np.arange(0, 125)
                 amp = np.zeros_like(freq)
             self.psd_curves[count].setData(freq.tolist(), amp.tolist())
