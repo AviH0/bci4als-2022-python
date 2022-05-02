@@ -16,6 +16,10 @@ from brainflow import BrainFlowInputParams, BoardShim, BoardIds
 
 from ..config.config import Config
 
+BOARD_BAD_CHANNELS_IND = range(13, 16)
+
+BOARD_GOOD_CHANELS_IND = range(13)
+
 
 class CytonRecorder(Recorder):
 
@@ -130,9 +134,9 @@ class CytonRecorder(Recorder):
             # According to https://docs.openbci.com/Cyton/CytonSDK/#channel-setting-commands
             GAIN_VALUE_TO_SETTING = {1: 0, 2: 1, 4: 2, 6: 3, 8: 4, 12: 5, 24: 6}
 
-            for i in range(13):
+            for i in BOARD_GOOD_CHANELS_IND:
                 self.__channel_hardware_settings(i, gain_setting=GAIN_VALUE_TO_SETTING[self._config.GAIN_VALUE])
-            for i in range(13, 16):
+            for i in BOARD_BAD_CHANNELS_IND:
                 self.__channel_hardware_settings(i, power_on=False)
         self.board.start_stream()
 
@@ -186,7 +190,8 @@ class CytonRecorder(Recorder):
         info.set_montage(montage)
         raw = mne.io.RawArray(eeg_data, info, verbose=False)
         raw.add_channels([marker_raw])
-        return raw
+        drop_channels = [name for index, name in enumerate(ch_names) if index in BOARD_BAD_CHANNELS_IND]
+        return raw.drop_channels(drop_channels)
 
     def __get_board_data(self) -> NDArray:
         """The method returns the current data from board, removes it from the buffer and adds it to static
