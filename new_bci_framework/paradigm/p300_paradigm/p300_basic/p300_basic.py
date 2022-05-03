@@ -53,13 +53,14 @@ class P300Basic(Paradigm):
         proc.start()
         while proc.is_alive():
             try:
-                marker = q.get(timeout=0.5)
-                while marker:
-                    try:
-                        recorder.push_marker(marker)
-                        marker = q.get(block=False)
-                    except Empty:
-                        continue
+                marker = q.get(timeout=0.01)
+                recorder.push_marker(marker)
+                # while marker:
+                #     recorder.push_marker(marker)
+                #     try:
+                #         marker = q.get(block=False)
+                #     except Empty:
+                #         continue
             except Empty:
                 continue
             except OSError:
@@ -763,9 +764,9 @@ class P300Basic(Paradigm):
                 beep_changeClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
                 frameN = -1
 
-                marker = 0
                 # -------Run Routine "beep_change"-------
                 while continueRoutine and routineTimer.getTime() > 0:
+                    marker = 0
                     # get current time
                     t = beep_changeClock.getTime()
                     tThisFlip = win.getFutureFlipTime(clock=beep_changeClock)
@@ -792,7 +793,6 @@ class P300Basic(Paradigm):
                             sound_2.frameNStop = frameN  # exact frame index
                             win.timeOnFlip(sound_2, 'tStopRefresh')  # time at next scr refresh
                             sound_2.stop()
-                            marker = 0
 
                     # *polygon* updates
                     if polygon.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
