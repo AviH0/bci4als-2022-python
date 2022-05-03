@@ -25,10 +25,12 @@ class P300Basic(Paradigm):
 
     LABEL_TARGET = "Target"
     LABEL_DISTRACTOR = "Distractor"
+    LABEL_NONTARGET = "Non-Target"
+
 
     def __init__(self, config: Config):
         super(P300Basic, self).__init__(config)
-        self.stim_labels = {self.LABEL_TARGET: 100, self.LABEL_DISTRACTOR: 200}
+        self.stim_labels = {self.LABEL_TARGET: 100, self.LABEL_DISTRACTOR: 200}#, self.LABEL_NONTARGET: 300}
         for k, v in self.stim_labels.items():
             config.TRIAL_LABELS[v] = k
 
@@ -52,7 +54,12 @@ class P300Basic(Paradigm):
         while proc.is_alive():
             try:
                 marker = q.get(timeout=0.5)
-                recorder.push_marker(marker)
+                while marker:
+                    try:
+                        recorder.push_marker(marker)
+                        marker = q.get(block=False)
+                    except Empty:
+                        continue
             except Empty:
                 continue
             except OSError:
@@ -81,7 +88,7 @@ class P300Basic(Paradigm):
 
         from psychopy import locale_setup
         from psychopy import prefs
-        from psychopy import sound, gui, visual, core, data, event, logging, clock, colors, layout
+        from psychopy import sound, gui, visual, core, data, event, logging, clock, colors
         from psychopy.constants import (NOT_STARTED, STARTED, PLAYING, PAUSED,
                                         STOPPED, FINISHED, PRESSED, RELEASED, FOREVER)
 
@@ -155,7 +162,7 @@ class P300Basic(Paradigm):
         eyetracker = None
 
         # create a default keyboard (e.g. to check for escape)
-        defaultKeyboard = keyboard.Keyboard(backend='iohub')
+        defaultKeyboard = keyboard.Keyboard()
 
         # Initialize components for Routine "target_beep"
         target_beepClock = core.Clock()
@@ -224,7 +231,7 @@ class P300Basic(Paradigm):
         polygon = visual.ShapeStim(
             win=win, name='polygon', vertices='cross',
             size=(0.1, 0.1),
-            ori=0.0, pos=(0, 0), anchor='center',
+            ori=0.0, pos=(0, 0), #anchor='center',
             lineWidth=1.0,     colorSpace='rgb',  lineColor='black', fillColor='black',
             opacity=None, depth=-1.0, interpolate=True)
 
@@ -756,7 +763,7 @@ class P300Basic(Paradigm):
                 beep_changeClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
                 frameN = -1
 
-
+                marker = 0
                 # -------Run Routine "beep_change"-------
                 while continueRoutine and routineTimer.getTime() > 0:
                     # get current time
@@ -767,7 +774,6 @@ class P300Basic(Paradigm):
                     # update/draw components on each frame
                     # start/stop sound_2
 
-                    marker = 0
                     target = thisTrial['target']
 
                     if sound_2.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -776,7 +782,8 @@ class P300Basic(Paradigm):
                         sound_2.tStart = t  # local t and not account for scr refresh
                         sound_2.tStartRefresh = tThisFlipGlobal  # on global time
                         sound_2.play(when=win)  # sync with win flip
-                        marker = target
+                        marker = self.stim_labels[self.LABEL_TARGET] if target == 1 else \
+                            self.stim_labels[self.LABEL_DISTRACTOR]
                     if sound_2.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
                         if tThisFlipGlobal > sound_2.tStartRefresh + 0.2-frameTolerance:
@@ -785,6 +792,7 @@ class P300Basic(Paradigm):
                             sound_2.frameNStop = frameN  # exact frame index
                             win.timeOnFlip(sound_2, 'tStopRefresh')  # time at next scr refresh
                             sound_2.stop()
+                            marker = 0
 
                     # *polygon* updates
                     if polygon.status == NOT_STARTED and tThisFlip >= 0.0-frameTolerance:
@@ -816,11 +824,10 @@ class P300Basic(Paradigm):
                             continueRoutine = True
                             break  # at least one component has not yet finished
 
+                    q.put(marker)
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                        q.put(marker)
                         win.flip()
-
                 # -------Ending Routine "beep_change"-------
                 for thisComponent in beep_changeComponents:
                     if hasattr(thisComponent, "setAutoDraw"):
