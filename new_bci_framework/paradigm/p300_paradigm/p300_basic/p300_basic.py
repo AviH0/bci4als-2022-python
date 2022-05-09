@@ -747,7 +747,7 @@ class P300Basic(Paradigm):
                 continueRoutine = True
                 routineTimer.add(1.100000)
                 # update component parameters for each repeat
-                sound_2.setSound(self.sound_target, secs=0.2, hamming=True)
+                sound_2.setSound(self.sound_target, secs=0.1, hamming=True)
                 sound_2.setVolume(1.0, log=False)
                 # keep track of which components have finished
                 beep_changeComponents = [sound_2, polygon]
