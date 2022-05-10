@@ -44,7 +44,7 @@ class Graph:
         self.psd.setTitle('Power Spectrum')
         self.psd.setLogMode(y=True)
         self.psd.disableAutoRange(ViewBox.YAxis)
-        self.psd.setRange(yRange=(0, 2))
+        self.psd.setRange(yRange=(0, 2), xRange=(0, 70))
         self.psd.addLegend((-20, 10))
         self.filter_button = pg.QtGui.QPushButton("Disable Filters")
 
@@ -70,7 +70,7 @@ class Graph:
             if i == 0:
                 p.setTitle('TimeSeries Plot')
             self.plots.append(p)
-            color = intColor(i, hues=len(self.exg_channels))
+            color = intColor(i*3 + (i%9),  values=2, sat=200+(2*i))
             curve = p.plot(pen=color, name=self.ch_names[i])
             self.curves.append(curve)
             curve = self.psd.plot(connect='all', pen=color, name=self.ch_names[i])
