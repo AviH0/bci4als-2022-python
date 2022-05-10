@@ -57,7 +57,7 @@ class P300Basic(Paradigm):
         proc.start()
         while proc.is_alive():
             try:
-                marker, timestamp = q.get(timeout=0.01)
+                marker, timestamp = q.get(timeout=0.001)
                 recorder.push_marker(marker, timestamp)
                 # while marker:
                 #     recorder.push_marker(marker)

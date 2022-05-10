@@ -20,6 +20,15 @@ class FileLogger(Logger):
         importance_level = "INFO"
         self.__file.write(f"{time.asctime()}-{importance_level}-{tag}: {message}\n")
 
+    def __getstate__(self):
+        # Copy the object's state from self.__dict__ which contains
+        # all our instance attributes. Always use the dict.copy()
+        # method to avoid modifying the original state.
+        state = self.__dict__.copy()
+        # Remove the unpicklable entries.
+        del state['_FileLogger__file']
+        return state
+
     # def __enter__(self):
     #     self.__file = open(self.__log_path, self.__mode)
     #     return self
