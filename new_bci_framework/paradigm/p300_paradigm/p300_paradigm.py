@@ -17,6 +17,7 @@ FILE_DIR =os.path.dirname(os.path.abspath(__file__))
 RESCOURCES_DIR = os.path.join(FILE_DIR, "res")
 # os.chdir(FILE_PATH)
 
+TAG = "P3FULLP"
 
 class P300Paradigm(Paradigm):
     """
@@ -25,14 +26,17 @@ class P300Paradigm(Paradigm):
 
     LABEL_TARGET = "Target"
     LABEL_DISTRACTOR = "Distractor"
+    LABEL_NONTARGET = "Non-Target"
 
     def __init__(self, config: Config):
         super(P300Paradigm, self).__init__(config)
-        self.stim_labels = {self.LABEL_TARGET: 100, self.LABEL_DISTRACTOR: 200}
+        self.stim_labels = {self.LABEL_TARGET: 100, self.LABEL_DISTRACTOR: 200, self.LABEL_NONTARGET: 300}
         for k, v in self.stim_labels.items():
             config.TRIAL_LABELS[v] = k
 
         self.questions_file = 'questions_everyone.xlsx'
+        self._config.logger.log(TAG, "Initialising Paradigm: P300 Full.")
+
 
     def run_expreriment_with_queue(self, q: multiprocessing.Queue):
         recorder = q[-1]
@@ -46,6 +50,7 @@ class P300Paradigm(Paradigm):
         #     l = m.list()
         #     l.append(recorder)
             # q.put(recorder)
+        self._config.logger.log(TAG, "Starting Experiment in new process.")
         q = multiprocessing.Queue()
         proc = multiprocessing.Process(target=self.psychopy_exp, args=(q,))
         proc.start()
@@ -64,6 +69,8 @@ class P300Paradigm(Paradigm):
         # self.psychopy_exp(recorder)
         # start a trial
         # recorder.push_marker("this trial's marker")
+        self._config.logger.log(TAG, "Experiment complete.")
+
 
     def psychopy_exp(self, q: multiprocessing.Queue):
         """

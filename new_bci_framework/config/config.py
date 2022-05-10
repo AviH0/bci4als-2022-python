@@ -56,7 +56,7 @@ class Config:
         self.SHOW_PLOTS = show_plots
 
         # This needs to be an dict where the keys are stim values and the values are their labels
-        self.TRIAL_LABELS: Dict[int, str] = dict()
+        self.TRIAL_LABELS: Dict[float, str] = dict()
         # Set trial start and end times in seconds relative to stimulus (for example -0.2, 0.9)
         self.TRIAL_START_TIME = -0.2
         self.TRIAL_END_TIME = 1.1
