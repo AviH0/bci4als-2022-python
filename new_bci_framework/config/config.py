@@ -5,6 +5,8 @@ from typing import Dict
 
 from matplotlib import pyplot as plt
 
+from new_bci_framework.logging import FileLogger
+
 
 class Config:
     """
@@ -24,6 +26,7 @@ class Config:
 
         plt.switch_backend(matplotlib_backend)
 
+
         self.SUBJECT_NAME = subject_name
         self.DATE = datetime.datetime.now().date().isoformat()
         base_session_dir = f"{root_dir}/Session_{self.DATE}_{self.SUBJECT_NAME}"
@@ -37,7 +40,8 @@ class Config:
             self.SESSION_SAVE_DIR = f"{base_session_dir}-{subject_count}"
         os.mkdir(self.SESSION_SAVE_DIR)
 
-
+        self.LOG_FILE_PATH = os.path.join(self.SESSION_SAVE_DIR, "log.txt")
+        self.logger = FileLogger(self.LOG_FILE_PATH)
 
         # Recorder settings:
         self.MONTAGE_FILENAME = os.path.join(__file__, "..", "..", "recorder", "montage_ultracortex.loc")
