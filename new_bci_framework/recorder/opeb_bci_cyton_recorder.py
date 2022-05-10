@@ -1,4 +1,5 @@
 import threading
+import time
 from typing import Optional, List, Union
 
 import matplotlib.pyplot as plt
@@ -13,6 +14,7 @@ from .plot_rt_recording import Graph
 from .recorder import Recorder
 from ..config.config import Config
 
+TAG = "CTYON_RECORDER"
 
 class CytonRecorder(Recorder):
 
@@ -23,6 +25,8 @@ class CytonRecorder(Recorder):
                  headset: str = "cyton",
                  synthetic_data=False):
         super(CytonRecorder, self).__init__(config)
+        init_message = f"Initialising cyton recorder with {'fake' if synthetic_data else 'real'} data"
+        config.logger.log(TAG, init_message)
         if synthetic_data:
             board_id = BoardIds.SYNTHETIC_BOARD
         self._config = config
@@ -50,17 +54,25 @@ class CytonRecorder(Recorder):
         self.eeg_names = self.__get_board_names()
         self.data = None
 
+        self._config.logger.log(TAG, "Connected to board.")
+
     def start_recording(self):
         self.__on()
 
-    def push_marker(self, marker):
+    def push_marker(self, marker, timestamp=None):
         if not marker:
             # zero is default value so do nothing
             return
+        self.__insert_marker(marker)
         if marker not in self._config.TRIAL_LABELS:
             self.__seen_markers += 1
             self._config.TRIAL_LABELS[marker] = f"Stimulus_{self.__seen_markers}"
-        self.__insert_marker(marker)
+            self._config.logger.log(TAG, f"Got previously unseen marker {marker}, created new label {self._config.TRIAL_LABELS[marker]}.")
+        if timestamp:
+            error_ms = ((time.time_ns() - timestamp)/1e6)
+            if error_ms > 10:
+                print(f"warning: push_marker error is: {error_ms}ms")
+                self._config.logger.log(TAG, f"warning: push_marker error is: {error_ms}ms")
 
     def end_recording(self):
         self.__off()
@@ -118,8 +130,8 @@ class CytonRecorder(Recorder):
     def __on(self):
         """Turn EEG On"""
         self.__is_recording = True
+        self._config.logger.log(TAG, "Preparing recording session")
         self.board.prepare_session()
-
         if self.board_id == BoardIds.CYTON_DAISY_BOARD:
             # According to https://docs.openbci.com/Cyton/CytonSDK/#channel-setting-commands
             GAIN_VALUE_TO_SETTING = {1: 0, 2: 1, 4: 2, 6: 3, 8: 4, 12: 5, 24: 6}
@@ -129,7 +141,9 @@ class CytonRecorder(Recorder):
                                                  gain_setting=GAIN_VALUE_TO_SETTING[self._config.GAIN_VALUE])
             for i in self._config.BAD_CHANNEL_INDXS:
                 self.__channel_hardware_settings(i, power_on=False)
+        self._config.logger.log(TAG, f"Changed Gain settings to {self._config.GAIN_VALUE}, disabled last {len(self._config.BAD_CHANNEL_INDXS)}  channels.")
         self.board.start_stream()
+        self._config.logger.log(TAG, "Recording Started")
 
     def __off(self):
         """Turn EEG Off"""
@@ -137,6 +151,7 @@ class CytonRecorder(Recorder):
         self.__is_recording = False
         self.board.stop_stream()
         self.board.release_session()
+        self._config.logger.log(TAG, "Recording ended.")
 
     def __insert_marker(self, marker: float):
         """Insert an encoded marker into EEG data"""

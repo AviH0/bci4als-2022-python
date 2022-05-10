@@ -23,7 +23,7 @@ class Recorder:
     def start_recording(self):
         raise NotImplementedError
 
-    def push_marker(self, marker: float):
+    def push_marker(self, marker: float, timestamp: int = None):
         raise NotImplementedError
 
     def end_recording(self):
