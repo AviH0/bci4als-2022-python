@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division
 
 import multiprocessing.managers
+import time
 from queue import Empty
 
 from ...paradigm import Paradigm
@@ -17,6 +18,7 @@ FILE_DIR =os.path.dirname(os.path.abspath(__file__))
 RESCOURCES_DIR = os.path.join(FILE_DIR, "res")
 # os.chdir(FILE_PATH)
 
+TAG = "P3BASICP"
 
 class P300Basic(Paradigm):
     """
@@ -28,13 +30,14 @@ class P300Basic(Paradigm):
     LABEL_NONTARGET = "Non-Target"
 
 
+
     def __init__(self, config: Config):
         super(P300Basic, self).__init__(config)
         self.stim_labels = {self.LABEL_TARGET: 100, self.LABEL_DISTRACTOR: 200}#, self.LABEL_NONTARGET: 300}
         for k, v in self.stim_labels.items():
             config.TRIAL_LABELS[v] = k
+        self._config.logger.log(TAG, "Initialising Paradigm: P300 Basic.")
 
-        self.questions_file = 'questions_everyone.xlsx'
 
     def run_expreriment_with_queue(self, q: multiprocessing.Queue):
         recorder = q[-1]
@@ -48,13 +51,14 @@ class P300Basic(Paradigm):
         #     l = m.list()
         #     l.append(recorder)
             # q.put(recorder)
+        self._config.logger.log(TAG, "Starting Paradigm P300 Basic in new process.")
         q = multiprocessing.Queue()
         proc = multiprocessing.Process(target=self.psychopy_exp, args=(q,))
         proc.start()
         while proc.is_alive():
             try:
-                marker = q.get(timeout=0.01)
-                recorder.push_marker(marker)
+                marker, timestamp = q.get(timeout=0.001)
+                recorder.push_marker(marker, timestamp)
                 # while marker:
                 #     recorder.push_marker(marker)
                 #     try:
@@ -72,6 +76,8 @@ class P300Basic(Paradigm):
         # self.psychopy_exp(recorder)
         # start a trial
         # recorder.push_marker("this trial's marker")
+        self._config.logger.log(TAG, "P300 Basic Experiment completed.")
+
 
     def psychopy_exp(self, q: multiprocessing.Queue):
 
@@ -103,7 +109,7 @@ class P300Basic(Paradigm):
         import psychopy.iohub as io
         from psychopy.hardware import keyboard
 
-
+        prefs.hardware['audioLib'] = ['PTB', 'sounddevice', 'pyo', 'pygame']
 
         # Ensure that relative paths start from the same directory as this script
         _thisDir = os.path.dirname(os.path.abspath(__file__))
@@ -611,7 +617,7 @@ class P300Basic(Paradigm):
         routineTimer.reset()
 
         # set up handler to look after randomisation of conditions etc
-        trials_2 = data.TrialHandler(nReps=2.0, method='random',
+        trials_2 = data.TrialHandler(nReps=5.0, method='random',
             extraInfo=expInfo, originPath=-1,
             trialList=[None],
             seed=None, name='trials_2')
@@ -824,7 +830,7 @@ class P300Basic(Paradigm):
                             continueRoutine = True
                             break  # at least one component has not yet finished
 
-                    q.put(marker)
+                    q.put((marker, time.time_ns()))
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
                         win.flip()
