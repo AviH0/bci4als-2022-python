@@ -57,8 +57,8 @@ class P300Paradigm(Paradigm):
         proc.start()
         while proc.is_alive():
             try:
-                marker = q.get(timeout=0.5)
-                recorder.push_marker(marker)
+                marker, timestamp = q.get(timeout=0.001)
+                recorder.push_marker(marker, timestamp)
             except Empty:
                 continue
             except OSError:
