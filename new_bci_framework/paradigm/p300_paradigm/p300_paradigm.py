@@ -1,6 +1,7 @@
 from __future__ import absolute_import, division
 
 import multiprocessing.managers
+import time
 from queue import Empty
 
 from ..paradigm import Paradigm
@@ -828,7 +829,6 @@ class P300Paradigm(Paradigm):
                 _timeToFirstFrame = win.getFutureFlipTime(clock="now")
                 trialClock.reset(-_timeToFirstFrame)  # t0 is time of first possible flip
                 frameN = -1
-
                 # -------Run Routine "trial"-------
                 while continueRoutine and routineTimer.getTime() > 0:
                     # get current time
@@ -866,8 +866,14 @@ class P300Paradigm(Paradigm):
                         target_sound.tStartRefresh = tThisFlipGlobal  # on global time
                         target_sound.play(when=win)  # sync with win flip
 
-                        marker = self.stim_labels[self.LABEL_TARGET] if target == thisTrial['stim'] else \
-                            self.stim_labels[self.LABEL_DISTRACTOR]
+                        if thisTrial['stim']:
+                            if target == thisTrial['stim']:
+                                marker = self.stim_labels[self.LABEL_TARGET]
+                            else:
+                                marker = self.stim_labels[self.LABEL_NONTARGET]
+                        else:
+                            marker = self.stim_labels[self.LABEL_DISTRACTOR]
+
                     if target_sound.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
                         if tThisFlipGlobal > target_sound.tStartRefresh + 1 - frameTolerance:
@@ -893,7 +899,7 @@ class P300Paradigm(Paradigm):
 
                     # refresh the screen
                     if continueRoutine:  # don't flip if this routine is over or we'll get a blank screen
-                        q.put(marker)
+                        q.put((marker, time.time_ns()))
                         win.flip()
 
                 # -------Ending Routine "trial"-------
