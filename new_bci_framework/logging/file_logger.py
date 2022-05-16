@@ -2,7 +2,7 @@ import atexit
 import time
 from typing import IO
 
-from new_bci_framework.logging import Logger
+from new_bci_framework.logging.logger import Logger
 
 
 class FileLogger(Logger):
