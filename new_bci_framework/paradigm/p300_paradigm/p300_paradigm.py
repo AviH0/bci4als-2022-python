@@ -866,14 +866,14 @@ class P300Paradigm(Paradigm):
                         target_sound.tStartRefresh = tThisFlipGlobal  # on global time
                         target_sound.play(when=win)  # sync with win flip
 
-                        if thisTrial['stim']:
+                        if thisTrial['target']:
                             if target == thisTrial['stim']:
                                 marker = self.stim_labels[self.LABEL_TARGET]
                             else:
                                 marker = self.stim_labels[self.LABEL_NONTARGET]
                         else:
                             marker = self.stim_labels[self.LABEL_DISTRACTOR]
-
+                        print(f"thisTrial['stim']: {thisTrial['stim']}, marker: {marker}")
                     if target_sound.status == STARTED:
                         # is it time to stop? (based on global clock, using actual start)
                         if tThisFlipGlobal > target_sound.tStartRefresh + 1 - frameTolerance:
