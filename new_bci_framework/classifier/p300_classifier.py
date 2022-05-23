@@ -50,7 +50,7 @@ class P300Classifier(BaseClassifier):
 
     def fit(self, data: mne.Epochs):
 
-        X = data.get_data() * 1e6
+        X = data.get_data(picks='eeg') * 1e6
         times = data.times
         y = data.events[:, -1]
 
@@ -82,7 +82,7 @@ class P300Classifier(BaseClassifier):
         pass
 
     def evaluate(self, data: mne.Epochs):
-        X = data.get_data() * 1e6
+        X = data.get_data(picks='eeg') * 1e6
         times = data.times
         y = data.events[:, -1]
 
@@ -102,7 +102,7 @@ class P300Classifier(BaseClassifier):
                 ax.set_title(m)
                 classes = list(self._config.TRIAL_LABELS.keys())
                 labels = [self._config.TRIAL_LABELS[val] for val in classes]
-                conf = ConfusionMatrixDisplay.from_estimator(self.clfs[m], X, y, ax=ax, labels=classes, display_labels=labels)
+                conf = ConfusionMatrixDisplay.from_estimator(self.clfs[m], X, y, ax=ax)
                 conf.plot(ax=ax)
                 fig.show()
             except:
