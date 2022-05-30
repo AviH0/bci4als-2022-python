@@ -5,7 +5,7 @@ from typing import Dict
 
 from matplotlib import pyplot as plt
 
-from new_bci_framework.logging import FileLogger
+from new_bci_framework.logging.file_logger import FileLogger
 
 
 class Config:

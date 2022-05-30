@@ -126,6 +126,8 @@ class Graph:
                 freq = np.arange(0, 125)
                 amp = np.zeros_like(freq)
                 self.prev_amp = amp
+            if self.prev_amp.shape != amp.shape:
+                self.prev_amp = np.zeros_like(freq)
             self.prev_amp = self.prev_amp * 0.9 + amp * 0.1
             self.psd_curves[count].setData(freq[:60].tolist(), self.prev_amp[:60].tolist())
         self.app.processEvents()
